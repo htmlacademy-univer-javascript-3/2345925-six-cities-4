@@ -26,7 +26,7 @@ export const OffersForCity: FC<OffresForCityProps> = ({ offers, city }) => {
         </div>
         <div className="favorites__places">
             {offers.map(offer => (
-                <FavouritesOffer offer={offer}/>
+                <FavouritesOffer offer={offer} key={offer.id}/>
             ))}
         </div>
     </li>

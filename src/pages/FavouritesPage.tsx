@@ -1,6 +1,7 @@
 import { FC } from 'react';
 import { OfferData } from '../components/main-page/Card';
 import { OffersForCity } from '../components/favourites/OffersForCity';
+import { Link } from 'react-router-dom';
 
 export interface FavouritesPageProps {
     offers: OfferData[]    
@@ -16,7 +17,7 @@ export const FavoritesPage: FC<FavouritesPageProps> = ({ offers }) => {
       <div className="container">
         <div className="header__wrapper">
           <div className="header__left">
-            <a className="header__logo-link" href="main.html">
+            <Link className="header__logo-link" to="/">
               <img
                 className="header__logo"
                 src="img/logo.svg"
@@ -24,7 +25,7 @@ export const FavoritesPage: FC<FavouritesPageProps> = ({ offers }) => {
                 width="81"
                 height="41"
               />
-            </a>
+            </Link>
           </div>
           <nav className="header__nav">
             <ul className="header__nav-list">
@@ -57,7 +58,7 @@ export const FavoritesPage: FC<FavouritesPageProps> = ({ offers }) => {
           <h1 className="favorites__title">Saved listing</h1>
           <ul className="favorites__list">
             {Object.keys(offersByCities).map(city => (
-              <OffersForCity city={city} offers={offersByCities[city] ?? null }/>
+              <OffersForCity city={city} offers={offersByCities[city] ?? null } key={city}/>
             ))}
           </ul>
         </section>

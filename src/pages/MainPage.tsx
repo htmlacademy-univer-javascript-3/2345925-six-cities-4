@@ -1,5 +1,5 @@
 import { FC } from "react"
-import Card, { OfferData } from "../components/main-page/Card";
+import { OfferData } from "../components/main-page/Card";
 import OffersList from "../components/main-page/OffersList";
 
 export interface MainPageProps {

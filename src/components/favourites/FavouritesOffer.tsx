@@ -1,5 +1,6 @@
 import { FC } from "react";
 import { OfferData } from "../main-page/Card";
+import { Link } from "react-router-dom";
 
 
 export interface FavouritesOfferProps {
@@ -52,7 +53,7 @@ export const FavouritesOffer: FC<FavouritesOfferProps> = ({ offer }) => {
                     </div>
                 </div>
                 <h2 className="place-card__name">
-                    <a href="#">White castle</a>
+                    <Link to={`/offer/${offer.id}`}>White castle</Link>
                 </h2>
                 <p className="place-card__type">{offer.type}</p>
                 </div>

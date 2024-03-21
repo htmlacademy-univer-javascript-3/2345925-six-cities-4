@@ -1,4 +1,5 @@
 import { FC } from 'react'
+import { Link } from 'react-router-dom';
 
 export interface OfferData {
     id: number;
@@ -72,7 +73,7 @@ const Card: FC<CardProps>  = ({
             </div>
         </div>
         <h2 className="place-card__name">
-            <a href="#">{offer.description}</a>
+            <Link to={`/offer/${offer.id}`}>{offer.description}</Link>
         </h2>
         <p className="place-card__type">{offer.type}</p>
         </div>
