@@ -1,13 +1,15 @@
 import { FC } from "react"
-import Card from "../components/Card";
-import { CARDS_DATA } from "../data/cards";
+import Card, { OfferData } from "../components/main-page/Card";
+import OffersList from "../components/main-page/OffersList";
 
 export interface MainPageProps {
     activeOffers?: number;
-  }
+    offers: OfferData[];
+}
 
 const MainPage: FC<MainPageProps> = ({
-    activeOffers
+    activeOffers,
+    offers
 }) => {
     return (
     <div className="page page--gray page--main">
@@ -98,11 +100,7 @@ const MainPage: FC<MainPageProps> = ({
                   <li className="places__option" tabIndex={0}>Top rated first</li>
                 </ul>
               </form>
-              <div className="cities__places-list places__list tabs__content">
-              {CARDS_DATA.map((card) => (
-                <Card key={`card-${card.image}`} {...card} />
-              ))}
-            </div>
+              <OffersList offers={offers}/>
             </section>
             <div className="cities__right-section">
               <section className="cities__map map"></section>
@@ -111,7 +109,7 @@ const MainPage: FC<MainPageProps> = ({
         </div>
       </main>
     </div>
-    )
+  )
 }
 
 export default MainPage

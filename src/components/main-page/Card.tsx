@@ -1,6 +1,8 @@
 import { FC } from 'react'
 
-export interface CardProps {
+export interface OfferData {
+    id: number;
+    city: string;
     mark?: string;
     image: string;
     price: number;
@@ -9,31 +11,32 @@ export interface CardProps {
     type: string;
     rating: number;
     bookmarked: boolean;
-  }
+}
+
+export interface CardProps {
+    offer: OfferData,
+    onMouseEnter: (id: number) => void
+}
 
 const Card: FC<CardProps>  = ({
-    mark,
-    image,
-    price,
-    priceText,
-    description,
-    type,
-    rating,
-    bookmarked
+    offer,
+    onMouseEnter
 }) => {
 
     return (
-    <article className="cities__card place-card">
-        {mark && (
+    <article className="cities__card place-card"
+        onMouseEnter={() => onMouseEnter(offer.id)}
+        >
+        {offer.mark && (
         <div className="place-card__mark">
-            <span>{mark}</span>
+            <span>{offer.mark}</span>
         </div>
         )}
         <div className="cities__image-wrapper place-card__image-wrapper">
         <a href="#">
             <img
             className="place-card__image"
-            src={image}
+            src={offer.image}
             width="260"
             height="200"
             alt="Place image"
@@ -43,8 +46,8 @@ const Card: FC<CardProps>  = ({
         <div className="place-card__info">
         <div className="place-card__price-wrapper">
             <div className="place-card__price">
-            <b className="place-card__price-value">&euro;{price}</b>
-            <span className="place-card__price-text">&#47;&nbsp;{priceText}</span>
+            <b className="place-card__price-value">&euro;{offer.price}</b>
+            <span className="place-card__price-text">&#47;&nbsp;{offer.priceText}</span>
             </div>
             <button
             className="place-card__bookmark-button place-card__bookmark-button--active button"
@@ -54,7 +57,7 @@ const Card: FC<CardProps>  = ({
                 <use xlinkHref="#icon-bookmark"></use>
             </svg>
             <span className="visually-hidden">
-                {bookmarked ? 'In' : 'To'} bookmarks
+                {offer.bookmarked ? 'In' : 'To'} bookmarks
             </span>
             </button>
         </div>
@@ -62,16 +65,16 @@ const Card: FC<CardProps>  = ({
             <div className="place-card__stars rating__stars">
             <span
                 style={{
-                width: `${rating}%`,
+                width: `${offer.rating * 20}%`,
                 }}
             />
             <span className="visually-hidden">Rating</span>
             </div>
         </div>
         <h2 className="place-card__name">
-            <a href="#">{description}</a>
+            <a href="#">{offer.description}</a>
         </h2>
-        <p className="place-card__type">{type}</p>
+        <p className="place-card__type">{offer.type}</p>
         </div>
     </article>
     )
