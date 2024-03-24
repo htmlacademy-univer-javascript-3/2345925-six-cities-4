@@ -1,4 +1,4 @@
-import { OfferData } from "../components/main-page/Card";
+import { OfferData } from "../pages/main/components/Card";
 
 export const OFFERS_DATA: OfferData[] = [
     {
