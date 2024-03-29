@@ -1,10 +1,10 @@
 /* eslint-disable react/jsx-no-useless-fragment */
 import { FC } from 'react';
 import { FavouritesOffer } from './FavouritesOffer';
-import { OfferData } from '../../main/components/Card';
+import { Offer } from '../../../types/offer';
 
 export interface OffresForCityProps {
-    offers: OfferData[] | null;
+    offers: Offer[] | null;
     city: string;
 }
 

@@ -6,17 +6,16 @@ import { LoginPage } from './pages/login/LoginPage';
 import { FavoritesPage } from './pages/favourites/FavouritesPage';
 import { OfferPage } from './pages/offer/OfferPage';
 import NotFoundPage from './pages/not-found/NotFoundPage';
-import User from './types/user';
+import { User } from './types/user';
 import Private from './components/Private';
-import { OfferData } from './pages/main/components/Card';
 import { FAVOURITES_URL, LOGIN_URL, OFFER_URL } from './url';
+import { Offer } from './types/offer';
 
 export interface AppProps {
-    offers: OfferData[];
-    favouriteIds: number[];
+    offers: Offer[];
 }
 
-const App: FC<AppProps> = ({ offers, favouriteIds }) => {
+const App: FC<AppProps> = ({ offers }) => {
   const [user, setUser] = useState<User | null>({id: '1', username: 'Dima'});
 
   return (
@@ -29,11 +28,7 @@ const App: FC<AppProps> = ({ offers, favouriteIds }) => {
           <Route path={FAVOURITES_URL} element={
             <Private user={user}>
               <FavoritesPage offers={
-                offers.filter(
-                  ((offer) =>
-                    favouriteIds.includes(offer.id)
-                  )
-                )
+                offers.filter((offer) => offer.isFavorite)
               }
               />
             </Private>
