@@ -63,42 +63,42 @@ export const OfferPage: FC = () => {
               <div className="offer__image-wrapper">
                 <img
                   className="offer__image"
-                  src={offerInfo.image}
+                  src={offerInfo.previewImage}
                   alt="Photo studio"
                 />
               </div>
               <div className="offer__image-wrapper">
                 <img
                   className="offer__image"
-                  src={offerInfo.image}
+                  src={offerInfo.previewImage}
                   alt="Photo studio"
                 />
               </div>
               <div className="offer__image-wrapper">
                 <img
                   className="offer__image"
-                  src={offerInfo.image}
+                  src={offerInfo.previewImage}
                   alt="Photo studio"
                 />
               </div>
               <div className="offer__image-wrapper">
                 <img
                   className="offer__image"
-                  src={offerInfo.image}
+                  src={offerInfo.previewImage}
                   alt="Photo studio"
                 />
               </div>
               <div className="offer__image-wrapper">
                 <img
                   className="offer__image"
-                  src={offerInfo.image}
+                  src={offerInfo.previewImage}
                   alt="Photo studio"
                 />
               </div>
               <div className="offer__image-wrapper">
                 <img
                   className="offer__image"
-                  src={offerInfo.image}
+                  src={offerInfo.previewImage}
                   alt="Photo studio"
                 />
               </div>
@@ -107,17 +107,17 @@ export const OfferPage: FC = () => {
           <div className="offer__container container">
             <div className="offer__wrapper">
               <div className="offer__mark">
-                <span>{offerInfo.mark ?? ''}</span>
+                <span>{offerInfo.isPremium === true ? 'Premium' : ''}</span>
               </div>
               <div className="offer__name-wrapper">
                 <h1 className="offer__name">
-                  {offerInfo.description}
+                  {offerInfo.title}
                 </h1>
                 <button className="offer__bookmark-button button" type="button">
                   <svg className="offer__bookmark-icon" width="31" height="33">
                     <use xlinkHref="#icon-bookmark"></use>
                   </svg>
-                  <span className="visually-hidden">{offerInfo.bookmarked ? 'In' : 'To'} bookmarks</span>
+                  <span className="visually-hidden">In bookmarks</span>
                 </button>
               </div>
               <div className="offer__rating rating">

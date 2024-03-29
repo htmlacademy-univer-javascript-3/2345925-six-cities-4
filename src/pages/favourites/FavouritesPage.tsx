@@ -3,17 +3,17 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 import { FC } from 'react';
-import { OfferData } from '../main/components/Card';
 import { OffersForCity } from './components/OffersForCity';
 import { Link } from 'react-router-dom';
+import { Offer } from '../../types/offer';
 
 export interface FavouritesPageProps {
-    offers: OfferData[];
+    offers: Offer[];
 }
 
 export const FavoritesPage: FC<FavouritesPageProps> = ({ offers }) => {
 
-  const offersByCities = Object.groupBy(offers, (item: OfferData) => item.city);
+  const offersByCities = Object.groupBy(offers, (item: Offer) => item.city.name);
 
   return (
     <div className="page">

@@ -1,14 +1,15 @@
 import { FC, useState } from 'react';
-import Card, { OfferData } from './Card';
+import { Offer } from '../../../types/offer';
+import Card from './Card';
 
 export interface OffersListProps {
-    offers: OfferData[];
+    offers: Offer[];
 }
 
 const OffersList: FC<OffersListProps> = ({
   offers
 }) => {
-  const [activeOfferId, setActiveOfferId] = useState<number | null>(null);
+  const [activeOfferId, setActiveOfferId] = useState<string | null>(null);
   return (
     <div className="cities__places-list places__list tabs__content">
       {offers.map((card) => (

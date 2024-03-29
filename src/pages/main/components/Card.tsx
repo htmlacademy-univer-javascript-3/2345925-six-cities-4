@@ -1,22 +1,10 @@
 import { FC } from 'react';
 import { Link } from 'react-router-dom';
-
-export interface OfferData {
-    id: number;
-    city: string;
-    mark?: string;
-    image: string;
-    price: number;
-    priceText: string;
-    description: string;
-    type: string;
-    rating: number;
-    bookmarked: boolean;
-}
+import { Offer } from '../../../types/offer';
 
 export interface CardProps {
-    offer: OfferData;
-    onMouseEnter: (id: number) => void;
+    offer: Offer;
+    onMouseEnter: (id: string) => void;
 }
 
 const Card: FC<CardProps> = ({
@@ -26,16 +14,14 @@ const Card: FC<CardProps> = ({
   <article className="cities__card place-card"
     onMouseEnter={() => onMouseEnter(offer.id)}
   >
-    {offer.mark && (
-      <div className="place-card__mark">
-        <span>{offer.mark}</span>
-      </div>
-    )}
+    <div className="place-card__mark">
+      <span>{offer.isPremium === true ? 'Premium' : ''}</span>
+    </div>
     <div className="cities__image-wrapper place-card__image-wrapper">
       <a href="#">
         <img
           className="place-card__image"
-          src={offer.image}
+          src={offer.previewImage}
           width="260"
           height="200"
           alt="Place image"
@@ -46,7 +32,7 @@ const Card: FC<CardProps> = ({
       <div className="place-card__price-wrapper">
         <div className="place-card__price">
           <b className="place-card__price-value">&euro;{offer.price}</b>
-          <span className="place-card__price-text">&#47;&nbsp;{offer.priceText}</span>
+          <span className="place-card__price-text">&#47;&nbsp;night</span>
         </div>
         <button
           className="place-card__bookmark-button place-card__bookmark-button--active button"
@@ -56,7 +42,7 @@ const Card: FC<CardProps> = ({
             <use xlinkHref="#icon-bookmark"></use>
           </svg>
           <span className="visually-hidden">
-            {offer.bookmarked ? 'In' : 'To'} bookmarks
+            To bookmarks
           </span>
         </button>
       </div>
@@ -71,7 +57,7 @@ const Card: FC<CardProps> = ({
         </div>
       </div>
       <h2 className="place-card__name">
-        <Link to={`/offer/${offer.id}`}>{offer.description}</Link>
+        <Link to={`/offer/${offer.id}`}>{offer.title}</Link>
       </h2>
       <p className="place-card__type">{offer.type}</p>
     </div>
