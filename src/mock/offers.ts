@@ -76,7 +76,7 @@ export const OFFERS_DATA: Offer[] = [
     type: 'Studio',
     isPremium: false,
     isFavorite: true,
-    previewImage: 'img/studio-01.jpg',
+    previewImage: 'img/apartment-01.jpg',
     price: 60,
     rating: 5,
     location: {

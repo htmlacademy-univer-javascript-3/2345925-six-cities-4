@@ -1,10 +1,10 @@
 import { FC } from 'react';
 import { Link } from 'react-router-dom';
-import { Offer } from '../../../types/offer';
+import { Offer } from '../../types/offer';
 
 export interface CardProps {
     offer: Offer;
-    onMouseEnter: (id: string) => void;
+    onMouseEnter?: (id: string) => void;
 }
 
 const Card: FC<CardProps> = ({
@@ -12,7 +12,7 @@ const Card: FC<CardProps> = ({
   onMouseEnter
 }) => (
   <article className="cities__card place-card"
-    onMouseEnter={() => onMouseEnter(offer.id)}
+    onMouseEnter={() => onMouseEnter !== undefined ? onMouseEnter(offer.id) : {}}
   >
     <div className="place-card__mark">
       <span>{offer.isPremium === true ? 'Premium' : ''}</span>

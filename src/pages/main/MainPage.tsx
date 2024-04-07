@@ -1,10 +1,10 @@
 import { FC } from 'react';
-import OffersList from './components/OffersList';
+import OffersList from '../../components/offers/OffersList';
 import { Link } from 'react-router-dom';
 import { FAVOURITES_URL } from '../../url';
-import { Map, MapPoint } from './components/Map';
-import { Offer } from '../../types/offer';
-import { MapCity } from '../../types/mapCity';
+import { Map, MapPoint } from '../../components/Map';
+import { City, Offer } from '../../types/offer';
+import { offerToMapPoint } from '../../utils/mapUtils';
 
 export interface MainPageProps {
     activeOffers?: number;
@@ -16,20 +16,15 @@ const MainPage: FC<MainPageProps> = ({
   offers
 }) => {
 
-  const city: MapCity = {
-    title: 'Amsterdam',
-    lat: 52.3909553943508,
-    lng: 4.85309666406198,
-    zoom: 0
+  const city: City = {
+    name: 'Amsterdam',
+    location:{
+      latitude: 52.3909553943508,
+      longitude: 4.85309666406198,
+      zoom: 0}
   };
 
-  const points: MapPoint[] = offers
-    .map((offer: Offer) => offer.city)
-    .map((location): MapPoint => ({
-      title: location.name,
-      lat: location.location.latitude,
-      lng: location.location.longitude
-    }));
+  const points: MapPoint[] = offers.map((offer: Offer) => offerToMapPoint(offer));
 
   return (
     <div className="page page--gray page--main">
@@ -124,7 +119,7 @@ const MainPage: FC<MainPageProps> = ({
             </section>
             <div className="cities__right-section">
               <section className="cities__map map">
-                <Map city={city} points={points} selectedPoint={undefined} />
+                <Map city={city} points={points} selectedPointId={undefined} />
               </section>
             </div>
           </div>

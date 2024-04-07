@@ -1,6 +1,6 @@
 import { FC, useState } from 'react';
-import { Offer } from '../../../types/offer';
-import Card from './Card';
+import { Offer } from '../../types/offer';
+import Card from './OfferCard';
 
 export interface OffersListProps {
     offers: Offer[];
