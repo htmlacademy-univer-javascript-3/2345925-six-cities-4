@@ -2,7 +2,7 @@ import {useRef, useEffect, FC} from 'react';
 import {Icon, Marker, layerGroup} from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import useMap from '../hooks/UseMap';
-import { URL_MARKER_CURRENT, URL_MARKER_DEFAULT } from '../icons';
+import { URL_MARKER_CURRENT, URL_MARKER_DEFAULT } from '../const/icons';
 import { City } from '../types/offer';
 
 export interface MapPoint {
@@ -58,6 +58,12 @@ export const Map: FC<MapProps> = ({city, points, selectedPointId}) => {
       };
     }
   }, [map, points, selectedPointId]);
+
+  useEffect(() => {
+    if (map) {
+      map.setView([city.location.latitude, city.location.longitude], city.location.zoom);
+    }
+  }, [map, city]);
 
   return <div style={{height: '100%'}} ref={mapRef}></div>;
 };

@@ -8,7 +8,7 @@ import { OfferPage } from './pages/offer/OfferPage';
 import NotFoundPage from './pages/not-found/NotFoundPage';
 import { User } from './types/user';
 import Private from './components/Private';
-import { FAVOURITES_URL, LOGIN_URL, OFFER_URL } from './url';
+import { FAVOURITES_URL, LOGIN_URL, OFFER_URL } from './const/url';
 import { Offer } from './types/offer';
 
 export interface AppProps {
@@ -22,7 +22,7 @@ const App: FC<AppProps> = ({ offers }) => {
     <BrowserRouter>
       <Routes>
         <Route path="/">
-          <Route index element={<MainPage offers={offers} activeOffers={69}/>} />
+          <Route index element={<MainPage/>} />
           <Route path={LOGIN_URL} element={<LoginPage/>} />
           <Route path={`${OFFER_URL}/:id`} element={<OfferPage />} />
           <Route path={FAVOURITES_URL} element={
