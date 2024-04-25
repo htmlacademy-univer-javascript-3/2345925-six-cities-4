@@ -1,28 +1,20 @@
 import { FC } from 'react';
 import OffersList from '../../components/offers/OffersList';
 import { Link } from 'react-router-dom';
-import { FAVOURITES_URL } from '../../url';
+import { FAVOURITES_URL } from '../../const/url';
 import { Map, MapPoint } from '../../components/Map';
 import { City, Offer } from '../../types/offer';
 import { offerToMapPoint } from '../../utils/mapUtils';
+import { CitiesTabs } from './components/CitiesTab';
+import { CITIES_DATA } from '../../const/cities';
+import { useSelector } from 'react-redux';
+import { selectCurrentCity, selectOffersList } from '../../state/selectors';
 
-export interface MainPageProps {
-    activeOffers?: number;
-    offers: Offer[];
-}
+const MainPage: FC = () => {
 
-const MainPage: FC<MainPageProps> = ({
-  activeOffers,
-  offers
-}) => {
+  const city: City = useSelector(selectCurrentCity);
 
-  const city: City = {
-    name: 'Amsterdam',
-    location:{
-      latitude: 52.3909553943508,
-      longitude: 4.85309666406198,
-      zoom: 0}
-  };
+  const offers = useSelector(selectOffersList).filter((it) => it.city.name === city.name);
 
   const points: MapPoint[] = offers.map((offer: Offer) => offerToMapPoint(offer));
 
@@ -59,47 +51,12 @@ const MainPage: FC<MainPageProps> = ({
 
       <main className="page__main page__main--index">
         <h1 className="visually-hidden">Cities</h1>
-        <div className="tabs">
-          <section className="locations container">
-            <ul className="locations__list tabs__list">
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Paris</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Cologne</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Brussels</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item tabs__item--active">
-                  <span>Amsterdam</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Hamburg</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Dusseldorf</span>
-                </a>
-              </li>
-            </ul>
-          </section>
-        </div>
+        <CitiesTabs cities={CITIES_DATA}/>
         <div className="cities">
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found"> {activeOffers ?? 0} places to stay in Amsterdam</b>
+              <b className="places__found"> {offers.length ?? 0} places to stay in Amsterdam</b>
               <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-caption">Sort by</span>
                 <span className="places__sorting-type" tabIndex={0}>

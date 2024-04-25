@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { Link } from 'react-router-dom';
-import { OFFER_URL } from '../../../url';
+import { OFFER_URL } from '../../../const/url';
 import { Offer } from '../../../types/offer';
 
 
