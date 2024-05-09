@@ -5,14 +5,17 @@ import { Offer } from '../../types/offer';
 export interface CardProps {
     offer: Offer;
     onMouseEnter?: (id: string) => void;
+    onMouseLeave?: () => void;
 }
 
 const Card: FC<CardProps> = ({
   offer,
-  onMouseEnter
+  onMouseEnter,
+  onMouseLeave
 }) => (
   <article className="cities__card place-card"
     onMouseEnter={() => onMouseEnter !== undefined ? onMouseEnter(offer.id) : {}}
+    onMouseLeave={() => onMouseLeave !== undefined ? onMouseLeave() : {}}
   >
     <div className="place-card__mark">
       <span>{offer.isPremium === true ? 'Premium' : ''}</span>
