@@ -1,6 +1,8 @@
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { Offer } from '../../types/offer';
 import Card from './OfferCard';
+import { useDispatch } from 'react-redux';
+import { changeActiveOfferId } from '../../state/actions';
 
 export interface OffersListProps {
     offers: Offer[];
@@ -9,11 +11,17 @@ export interface OffersListProps {
 const OffersList: FC<OffersListProps> = ({
   offers
 }) => {
-  const [activeOfferId, setActiveOfferId] = useState<string | null>(null);
+  const [activeOfferId, setActiveOfferId] = useState<string | undefined>(undefined);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(changeActiveOfferId(activeOfferId));
+  }, [activeOfferId]);
+
   return (
     <div className="cities__places-list places__list tabs__content">
       {offers.map((card) => (
-        <Card key={card.id} offer={card} onMouseEnter={setActiveOfferId}/>
+        <Card key={card.id} offer={card} onMouseEnter={setActiveOfferId} onMouseLeave={() => setActiveOfferId(undefined)}/>
       ))}
     </div>
   );
