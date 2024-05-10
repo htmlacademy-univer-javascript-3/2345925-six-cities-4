@@ -7,3 +7,4 @@ export const LOG_IN = '/login';
 export const LOG_OUT = '/logout';
 export const GET_COMMENTS = '/comments';
 export const SEND_FORM = '/comments';
+export const CHANGE_FAVOURITE_STATUS = '/favorite';

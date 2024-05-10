@@ -14,12 +14,16 @@ import Spinner from '../../components/Spinner';
 import { Comment } from '../../types/comment';
 import NearbyOffersList from './components/NearbyOffersList';
 import { useSelector } from 'react-redux';
-import { selectAuthStatus } from '../../state/selectors';
+import { selectAuthStatus, selectOffersList } from '../../state/selectors';
 import { AuthStatus } from '../../types/authStatus';
+import FavouriteButton from '../../components/FavouriteButton';
 
+const MAX_PREVIEW_IMAGES = 6;
+const PRO_HOST_CLASS = 'offer__avatar-wrapper--pro';
 
 export const OfferPage: FC = () => {
   const { id } = useParams();
+  const allOffers = useSelector(selectOffersList);
   const navigate = useNavigate();
   const [offerInfo, setOfferInfo] = useState<FullOfferInfo | undefined>(undefined);
   const [comments, setComments] = useState<Comment[] | undefined>(undefined);
@@ -55,7 +59,7 @@ export const OfferPage: FC = () => {
     getOfferInfo();
     getNearbyOffers();
     getComments();
-  }, [id]);
+  }, [id, allOffers]);
 
 
   return (
@@ -66,7 +70,7 @@ export const OfferPage: FC = () => {
           <section className="offer">
             <div className="offer__gallery-container container">
               <div className="offer__gallery">
-                {offerInfo?.images.map((image) =>
+                {offerInfo.images.slice(0, Math.min(offerInfo.images.length, MAX_PREVIEW_IMAGES)).map((image) =>
                   (
                     <div className="offer__image-wrapper" key={image}>
                       <img
@@ -80,23 +84,23 @@ export const OfferPage: FC = () => {
             </div>
             <div className="offer__container container">
               <div className="offer__wrapper">
-                <div className="offer__mark">
-                  <span>{offerInfo.isPremium === true ? 'Premium' : ''}</span>
+                <div className="offer__mark" hidden={!offerInfo.isPremium}>
+                  <span>Premium</span>
                 </div>
                 <div className="offer__name-wrapper">
                   <h1 className="offer__name">
                     {offerInfo.title}
                   </h1>
-                  <button className="offer__bookmark-button button" type="button">
-                    <svg className="offer__bookmark-icon" width="31" height="33">
-                      <use xlinkHref="#icon-bookmark"></use>
-                    </svg>
-                    <span className="visually-hidden">In bookmarks</span>
-                  </button>
+                  <FavouriteButton id={offerInfo.id}
+                    isFavourite={offerInfo.isFavorite}
+                    stylePrefix={'offer'}
+                    width={31}
+                    height={33}
+                  />
                 </div>
                 <div className="offer__rating rating">
                   <div className="offer__stars rating__stars">
-                    <span style={{ width: `${offerInfo.rating * 20}%` }}></span>
+                    <span style={{ width: `${Math.round(offerInfo.rating) * 20}%` }}></span>
                     <span className="visually-hidden">Rating</span>
                   </div>
                   <span className="offer__rating-value rating__value">{offerInfo.rating}</span>
@@ -106,10 +110,10 @@ export const OfferPage: FC = () => {
                     {offerInfo.type}
                   </li>
                   <li className="offer__feature offer__feature--bedrooms">
-                    {offerInfo.bedrooms} Bedrooms
+                    {offerInfo.bedrooms} Bedroom{offerInfo.bedrooms !== 1 ? 's' : ''}
                   </li>
                   <li className="offer__feature offer__feature--adults">
-                    Max {offerInfo.maxAdults} adults
+                    Max {offerInfo.maxAdults} adult{offerInfo.maxAdults !== 1 ? 's' : ''}
                   </li>
                 </ul>
                 <div className="offer__price">
@@ -125,7 +129,7 @@ export const OfferPage: FC = () => {
                 <div className="offer__host">
                   <h2 className="offer__host-title">Meet the host</h2>
                   <div className="offer__host-user user">
-                    <div className="offer__avatar-wrapper offer__avatar-wrapper--pro user__avatar-wrapper">
+                    <div className={`offer__avatar-wrapper ${offerInfo.host.isPro ? PRO_HOST_CLASS : ''} user__avatar-wrapper`}>
                       <img
                         className="offer__avatar user__avatar"
                         src={offerInfo.host.avatarUrl}
@@ -135,7 +139,7 @@ export const OfferPage: FC = () => {
                       />
                     </div>
                     <span className="offer__user-name">{offerInfo.host.name}</span>
-                    <span className="offer__user-status">{offerInfo.host.isPro}</span>
+                    <span className="offer__user-status">{offerInfo.host.isPro ? 'Pro' : ''}</span>
                   </div>
                   <div className="offer__description">
                     <p className="offer__text">

@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FAVOURITES_URL, LOGIN_URL, MAIN_URL } from '../const/url';
 import { useSelector } from 'react-redux';
 import { selectCurrentUser, selectOffersList } from '../state/selectors';
@@ -15,10 +15,13 @@ const Header: FC<HeaderProps> = ({showSignButton}) => {
   const user = useSelector(selectCurrentUser);
   const favouriteCount = useSelector(selectOffersList)?.filter((offer) => offer.isFavorite).length;
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const logOutIfPresent = () => {
     if(user) {
       dispatch(logOut());
+      return;
     }
+    navigate(LOGIN_URL);
   };
 
   return (
@@ -44,13 +47,13 @@ const Header: FC<HeaderProps> = ({showSignButton}) => {
                 : <div></div>}
               {toShow ?
                 <li className="header__nav-item">
-                  <Link className="header__nav-link" to={user ? MAIN_URL : LOGIN_URL}
+                  <a className="header__nav-link"
                     onClick={() => {
                       logOutIfPresent();
                     }}
                   >
                     <span className="header__signout">Sign {user ? 'out' : 'in'}</span>
-                  </Link>
+                  </a>
                 </li>
                 : <div></div>}
 

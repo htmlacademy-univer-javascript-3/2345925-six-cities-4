@@ -2,6 +2,7 @@ import { FC } from 'react';
 import { Link } from 'react-router-dom';
 import { OFFER_URL } from '../../../const/url';
 import { Offer } from '../../../types/offer';
+import FavouriteButton from '../../../components/FavouriteButton';
 
 
 export interface FavouritesOfferProps {
@@ -29,21 +30,7 @@ export const FavouritesOffer: FC<FavouritesOfferProps> = ({ offer }) => (
             &#47;&nbsp;night
           </span>
         </div>
-        <button
-          className="place-card__bookmark-button place-card__bookmark-button--active button"
-          type="button"
-        >
-          <svg
-            className="place-card__bookmark-icon"
-            width="18"
-            height="19"
-          >
-            <use xlinkHref="#icon-bookmark"></use>
-          </svg>
-          <span className="visually-hidden">
-            To bookmarks
-          </span>
-        </button>
+        <FavouriteButton isFavourite={offer.isFavorite} id={offer.id}/>
       </div>
       <div className="place-card__rating rating">
         <div className="place-card__stars rating__stars">
@@ -52,7 +39,7 @@ export const FavouritesOffer: FC<FavouritesOfferProps> = ({ offer }) => (
         </div>
       </div>
       <h2 className="place-card__name">
-        <Link to={`/offer/${offer.id}`}>White castle</Link>
+        <Link to={`/offer/${offer.id}`}>{offer.title}</Link>
       </h2>
       <p className="place-card__type">{offer.type}</p>
     </div>

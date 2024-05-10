@@ -4,9 +4,11 @@ import { axiosInstance } from '../../../api';
 import { SEND_FORM } from '../../../const/apiConsts';
 
 const starValues = [5, 4, 3, 2, 1];
+const MIN_REVIEW_SYMBOLS = 50;
+const MAX_REVIEW_SYMBOLS = 300;
 
 interface FormData {
-  rating: number;
+  rating: number | undefined;
   comment: string;
 }
 
@@ -17,12 +19,12 @@ export interface CommentFormProps {
 
 export const CommentForm: FC<CommentFormProps> = ({ offerId, afterFormSend }) => {
 
-  const [data, setData] = useState<FormData | null>(null);
+  const [data, setData] = useState<FormData>({rating: undefined, comment: ''});
   const [submitDisabled, setSumitDisabled] = useState(true);
-  const MIN_REVIEW_SYMBOLS = 50;
 
   useEffect(() => {
-    if(data !== null && data.rating !== null && data.comment?.length >= MIN_REVIEW_SYMBOLS) {
+    if(data.rating !== undefined && data.comment !== undefined
+      && (data.comment.length >= MIN_REVIEW_SYMBOLS && data.comment.length <= MAX_REVIEW_SYMBOLS)) {
       setSumitDisabled(false);
     } else {
       setSumitDisabled(true);
@@ -33,9 +35,13 @@ export const CommentForm: FC<CommentFormProps> = ({ offerId, afterFormSend }) =>
     event.preventDefault();
     const sendData = async () => {
       try {
+        setSumitDisabled(true);
         await axiosInstance.post<Comment>(`${SEND_FORM}/${offerId}`, data);
+        setData({rating: 0, comment: ''});
         afterFormSend();
-      } catch (err) { /* empty */ }
+      } finally {
+        setSumitDisabled(false);
+      }
     };
     sendData();
   };
@@ -53,10 +59,12 @@ export const CommentForm: FC<CommentFormProps> = ({ offerId, afterFormSend }) =>
             starValue={star}
             onChange={() => setData({...data, rating: star} as FormData)}
             key={star}
+            checkedValue={data.rating}
           />
         ))}
       </div>
       <textarea
+        value={data.comment}
         onChange={(event) => setData({...data, comment: event.target.value} as FormData)}
         className="reviews__textarea form__textarea"
         id="review"
