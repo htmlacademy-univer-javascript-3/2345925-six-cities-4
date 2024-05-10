@@ -10,13 +10,18 @@ import { User } from './types/user';
 import Private from './components/Private';
 import { FAVOURITES_URL, LOGIN_URL, OFFER_URL } from './const/url';
 import { Offer } from './types/offer';
+import { fetchOffersList } from './state/actions';
+import { useAppDispatch } from './state';
 
 export interface AppProps {
     offers: Offer[];
 }
 
 const App: FC<AppProps> = ({ offers }) => {
-  const [user, setUser] = useState<User | null>({id: '1', username: 'Dima'});
+  const [user, setUser] = useState<User | undefined>(undefined);
+
+  const dispatch = useAppDispatch();
+  dispatch(fetchOffersList());
 
   return (
     <BrowserRouter>
@@ -26,7 +31,7 @@ const App: FC<AppProps> = ({ offers }) => {
           <Route path={LOGIN_URL} element={<LoginPage/>} />
           <Route path={`${OFFER_URL}/:id`} element={<OfferPage />} />
           <Route path={FAVOURITES_URL} element={
-            <Private user={user}>
+            <Private user={user} toUrl={LOGIN_URL}>
               <FavoritesPage offers={
                 offers.filter((offer) => offer.isFavorite)
               }

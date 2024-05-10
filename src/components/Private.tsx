@@ -3,14 +3,15 @@ import { Navigate } from 'react-router-dom';
 import { User } from '../types/user';
 
 export interface PrivateProps {
-    user: User | null;
+    user: User | undefined;
+    toUrl: string;
     children: JSX.Element | JSX.Element[];
 }
 
-const Private: FC<PrivateProps> = ({user, children}) => {
+const Private: FC<PrivateProps> = ({user, toUrl, children}) => {
 
-  if(user === null) {
-    return <Navigate to="/login" />;
+  if(user === undefined) {
+    return <Navigate to={toUrl} />;
   }
   return children;
 
