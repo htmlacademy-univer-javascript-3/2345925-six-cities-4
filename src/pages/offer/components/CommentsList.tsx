@@ -1,12 +1,12 @@
 import { FC } from 'react';
-import { Review } from '../../../types/review';
-import { ReviewCard } from './ReviewCard';
+import { Comment } from '../../../types/comment';
+import { CommentCard } from './CommentCard';
 
-export interface ReviewListProps {
-  reviews: Review[] | undefined;
+export interface CommentsListProps {
+  reviews: Comment[] | undefined;
 }
 
-export const ReviewList: FC<ReviewListProps> = ({reviews}) => {
+export const CommentsList: FC<CommentsListProps> = ({reviews}) => {
   if(reviews === undefined || reviews.length === 0) {
     return <h2 className="reviews__title"> There is no comments yet. <br></br> Leave comment first!</h2>;
   }
@@ -17,7 +17,7 @@ export const ReviewList: FC<ReviewListProps> = ({reviews}) => {
         Reviews · <span className="reviews__amount">{reviews.length}</span>
       </h2>
       <ul className="reviews__list">
-        {reviews.map((it) => <ReviewCard key={it.id} review={it} />)}
+        {reviews.map((it) => <CommentCard key={it.id} review={it} />)}
       </ul>
     </>
   );

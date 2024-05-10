@@ -1,5 +1,5 @@
 import { FC, useState } from 'react';
-import OffersList from '../../components/offers/OffersList';
+import OffersList from './components/OffersList';
 import { Map, MapPoint } from '../../components/Map';
 import { City, Offer } from '../../types/offer';
 import { offerToMapPoint } from '../../utils/mapUtils';
@@ -37,15 +37,7 @@ const MainPage: FC = () => {
         <div className="cities">
           <div className="cities__places-container container">
             {!offers ?
-              <section className='cities__places places'
-                style={{
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center'
-                }}
-              >
-                <Spinner sizeInPixels={100}/>
-              </section>
+              <Spinner sizeInPixels={100}/>
               :
               <section className="cities__places places">
                 <h2 className="visually-hidden">Places</h2>

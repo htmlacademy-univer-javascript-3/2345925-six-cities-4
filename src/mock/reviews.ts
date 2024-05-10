@@ -1,7 +1,7 @@
-import { Review } from '../types/review';
+import { Comment } from '../types/comment';
 
 
-export const REVIEWS_FOR_OFFERS: {offerId: string; reviews: Review[]}[] = [
+export const REVIEWS_FOR_OFFERS: {offerId: string; reviews: Comment[]}[] = [
   {
     offerId: '1',
     reviews: [

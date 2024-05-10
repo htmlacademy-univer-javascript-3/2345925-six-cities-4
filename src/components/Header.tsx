@@ -2,7 +2,7 @@ import { FC } from 'react';
 import { Link } from 'react-router-dom';
 import { FAVOURITES_URL, LOGIN_URL, MAIN_URL } from '../const/url';
 import { useSelector } from 'react-redux';
-import { selectCurrentUser } from '../state/selectors';
+import { selectCurrentUser, selectOffersList } from '../state/selectors';
 import { useAppDispatch } from '../state';
 import { logOut } from '../state/actions';
 
@@ -13,6 +13,7 @@ export interface HeaderProps {
 const Header: FC<HeaderProps> = ({showSignButton}) => {
   const toShow = showSignButton !== undefined ? showSignButton : true;
   const user = useSelector(selectCurrentUser);
+  const favouriteCount = useSelector(selectOffersList)?.filter((offer) => offer.isFavorite).length;
   const dispatch = useAppDispatch();
   const logOutIfPresent = () => {
     if(user) {
@@ -37,7 +38,7 @@ const Header: FC<HeaderProps> = ({showSignButton}) => {
                     <div className="header__avatar-wrapper user__avatar-wrapper">
                     </div>
                     <span className="header__user-name user__name">{user.name}</span>
-                    <span className="header__favorite-count">3</span>
+                    <span className="header__favorite-count">{favouriteCount}</span>
                   </Link>
                 </li>
                 : <div></div>}

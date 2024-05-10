@@ -1,30 +1,49 @@
-import { FC, useEffect, useState } from 'react';
+import { FC, FormEvent, useEffect, useState } from 'react';
 import { StarInput } from '../../../components/StarInput';
+import { axiosInstance } from '../../../api';
+import { SEND_FORM } from '../../../const/apiConsts';
 
 const starValues = [5, 4, 3, 2, 1];
 
 interface FormData {
   rating: number;
-  review: string;
+  comment: string;
 }
 
-export const SendReviewForm: FC = () => {
+export interface CommentFormProps {
+  offerId: string;
+  afterFormSend: () => void;
+}
+
+export const CommentForm: FC<CommentFormProps> = ({ offerId, afterFormSend }) => {
 
   const [data, setData] = useState<FormData | null>(null);
   const [submitDisabled, setSumitDisabled] = useState(true);
   const MIN_REVIEW_SYMBOLS = 50;
 
   useEffect(() => {
-    if(data !== null && data.rating !== null && data.review?.length >= MIN_REVIEW_SYMBOLS) {
+    if(data !== null && data.rating !== null && data.comment?.length >= MIN_REVIEW_SYMBOLS) {
       setSumitDisabled(false);
     } else {
       setSumitDisabled(true);
     }
   }, [data]);
 
+  const onSubmit = (event: FormEvent) => {
+    event.preventDefault();
+    const sendData = async () => {
+      try {
+        await axiosInstance.post<Comment>(`${SEND_FORM}/${offerId}`, data);
+        afterFormSend();
+      } catch (err) { /* empty */ }
+    };
+    sendData();
+  };
 
   return (
-    <form className="reviews__form form" action="#" method="post">
+    <form className="reviews__form form"
+      onSubmit={onSubmit}
+    >
       <label className="reviews__label form__label" htmlFor="review">
             Your review
       </label>
@@ -38,7 +57,7 @@ export const SendReviewForm: FC = () => {
         ))}
       </div>
       <textarea
-        onChange={(event) => setData({...data, review: event.target.value} as FormData)}
+        onChange={(event) => setData({...data, comment: event.target.value} as FormData)}
         className="reviews__textarea form__textarea"
         id="review"
         name="review"

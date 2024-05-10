@@ -1,7 +1,7 @@
 import { createAction, createAsyncThunk } from '@reduxjs/toolkit';
 import { City, Offer } from '../types/offer';
 import { ThunkConfig } from '.';
-import { GET_USER, GET_OFFERS_URL, LOG_OUT, LOG_IN } from '../const/apiConsts';
+import { GET_USER, GET_OFFERS, LOG_OUT, LOG_IN } from '../const/apiConsts';
 import { AuthStatus } from '../types/authStatus';
 import { User } from '../types/user';
 import { setAuthToken } from '../api';
@@ -21,11 +21,11 @@ export const fetchOffersList = createAsyncThunk<void, undefined, ThunkConfig>('o
   _,
   { extra, dispatch }
 ) => {
-  const response = await extra.get<Offer[]>(GET_OFFERS_URL);
+  const response = await extra.get<Offer[]>(GET_OFFERS);
   dispatch(changeOffersList(response.data));
 });
 
-export const getUser = createAsyncThunk<void, undefined, ThunkConfig>('auth/getUser', async (
+export const fetchUser = createAsyncThunk<void, undefined, ThunkConfig>('auth/getUser', async (
   _,
   { extra, dispatch }
 ) => {
