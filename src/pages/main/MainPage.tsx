@@ -10,6 +10,7 @@ import { CITIES_DATA } from '../../const/cities';
 import { useSelector } from 'react-redux';
 import { selectActiveOfferId, selectCurrentCity, selectOffersList } from '../../state/selectors';
 import SortingSelect, { SortType } from './components/SortingSelect';
+import Spinner from '../../components/Spinner';
 
 const sortFunctions: Record<SortType, (a: Offer, b: Offer) => number> = {
   [SortType.LOW_PRICE_FIRST]: (a, b) => a.price - b.price,
@@ -22,12 +23,11 @@ const MainPage: FC = () => {
 
   const [sortType, setSortType] = useState<SortType>(SortType.POPULAR);
   const city: City = useSelector(selectCurrentCity);
-
-  const offers = useSelector(selectOffersList).filter((it) => it.city.name === city.name);
+  const allOffers = useSelector(selectOffersList);
   const activeOfferId = useSelector(selectActiveOfferId);
-  const sortedOffers = offers.sort(sortFunctions[sortType]);
-
-  const points: MapPoint[] = offers.map((offer: Offer) => offerToMapPoint(offer));
+  const offers = allOffers ? allOffers.filter((it) => it.city.name === city.name) : undefined;
+  const sortedOffers = offers ? offers.sort(sortFunctions[sortType]) : [];
+  const points: MapPoint[] = offers ? offers.map((offer: Offer) => offerToMapPoint(offer)) : [];
 
   return (
     <div className="page page--gray page--main">
@@ -65,12 +65,23 @@ const MainPage: FC = () => {
         <CitiesTabs cities={CITIES_DATA}/>
         <div className="cities">
           <div className="cities__places-container container">
-            <section className="cities__places places">
-              <h2 className="visually-hidden">Places</h2>
-              <b className="places__found"> {offers.length ?? 0} places to stay in Amsterdam</b>
-              <SortingSelect onSortSelected={setSortType}/>
-              <OffersList offers={sortedOffers} />
-            </section>
+            {!offers ?
+              <section className='cities__places places'
+                style={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center'
+                }}
+              >
+                <Spinner sizeInPixels={100}/>
+              </section>
+              :
+              <section className="cities__places places">
+                <h2 className="visually-hidden">Places</h2>
+                <b className="places__found"> {offers.length ?? 0} places to stay in {city.name}</b>
+                <SortingSelect onSortSelected={setSortType}/>
+                <OffersList offers={sortedOffers} />
+              </section>}
             <div className="cities__right-section">
               <section className="cities__map map">
                 <Map city={city} points={points} selectedPointId={activeOfferId} />
