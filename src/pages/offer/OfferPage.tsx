@@ -1,17 +1,19 @@
 import { FC } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { OFFERS_DATA } from '../../mock/offers';
 import { SendReviewForm } from './components/SendReviewForm';
-import { FAVOURITES_URL } from '../../const/url';
 import { REVIEWS_FOR_OFFERS } from '../../mock/reviews';
 import { ReviewList } from './components/ReviewList';
 import { Map } from '../../components/Map';
 import { offerToMapPoint } from '../../utils/mapUtils';
 import OffersList from '../../components/offers/OffersList';
+import { useSelector } from 'react-redux';
+import { selectOffersList } from '../../state/selectors';
+import Header from '../../components/Header';
 
 export const OfferPage: FC = () => {
   const { id } = useParams();
-  const offerInfo = OFFERS_DATA.find((it) => String(it.id) === id);
+  const offerInfo = useSelector(selectOffersList)?.find((it) => String(it.id) === id);
   const reviews = REVIEWS_FOR_OFFERS.find((it) => String(it.offerId) === id)?.reviews;
   const nearbyOffers = OFFERS_DATA.slice(0, 3);
 
@@ -24,45 +26,7 @@ export const OfferPage: FC = () => {
 
   return (
     <div className="page">
-      <header className="header">
-        <div className="container">
-          <div className="header__wrapper">
-            <div className="header__left">
-              <Link className="header__logo-link" to="/">
-                <img
-                  className="header__logo"
-                  src="img/logo.svg"
-                  alt="6 cities logo"
-                  width="81"
-                  height="41"
-                />
-              </Link>
-            </div>
-            <nav className="header__nav">
-              <ul className="header__nav-list">
-                <li className="header__nav-item user">
-                  <Link
-                    className="header__nav-link header__nav-link--profile"
-                    to={FAVOURITES_URL}
-                  >
-                    <div className="header__avatar-wrapper user__avatar-wrapper"></div>
-                    <span className="header__user-name user__name">
-                      Oliver.conner@gmail.com
-                    </span>
-                    <span className="header__favorite-count">3</span>
-                  </Link>
-                </li>
-                <li className="header__nav-item">
-                  <a className="header__nav-link" href="#">
-                    <span className="header__signout">Sign out</span>
-                  </a>
-                </li>
-              </ul>
-            </nav>
-          </div>
-        </div>
-      </header>
-
+      <Header />
       <main className="page__main page__main--offer">
         <section className="offer">
           <div className="offer__gallery-container container">
