@@ -39,6 +39,9 @@ export const CommentForm: FC<CommentFormProps> = ({ offerId, afterFormSend }) =>
         await axiosInstance.post<Comment>(`${SEND_FORM}/${offerId}`, data);
         setData({rating: 0, comment: ''});
         afterFormSend();
+      } catch (err) {
+        // eslint-disable-next-line no-alert
+        alert('Something went wrong, your comment wasn\'t saved');
       } finally {
         setSumitDisabled(false);
       }

@@ -9,7 +9,6 @@ import { axiosInstance } from '../../api';
 import { GET_COMMENTS, GET_OFFERS } from '../../const/apiConsts';
 import { FullOfferInfo } from '../../types/fullOfferInfo';
 import { Offer } from '../../types/offer';
-import { MAIN_URL } from '../../const/url';
 import Spinner from '../../components/Spinner';
 import { Comment } from '../../types/comment';
 import NearbyOffersList from './components/NearbyOffersList';
@@ -17,8 +16,10 @@ import { useSelector } from 'react-redux';
 import { selectAuthStatus, selectOffersList } from '../../state/selectors';
 import { AuthStatus } from '../../types/authStatus';
 import FavouriteButton from '../../components/FavouriteButton';
+import { NOT_FOUND_URL } from '../../const/url';
 
 const MAX_PREVIEW_IMAGES = 6;
+const MAX_NEARBY_OFFERS = 3;
 const PRO_HOST_CLASS = 'offer__avatar-wrapper--pro';
 
 export const OfferPage: FC = () => {
@@ -35,7 +36,7 @@ export const OfferPage: FC = () => {
       const response = await axiosInstance.get<Comment[]>(`${GET_COMMENTS}/${id}`);
       setComments(response.data);
     } catch (err) {
-      navigate(MAIN_URL);
+      navigate(NOT_FOUND_URL);
     }
   };
   const getOfferInfo = async () => {
@@ -43,15 +44,15 @@ export const OfferPage: FC = () => {
       const response = await axiosInstance.get<FullOfferInfo>(`${GET_OFFERS}/${id}`);
       setOfferInfo(response.data);
     } catch (err) {
-      navigate(MAIN_URL);
+      navigate(NOT_FOUND_URL);
     }
   };
   const getNearbyOffers = async () => {
     try {
       const response = await axiosInstance.get<Offer[]>(`${GET_OFFERS}/${id}/nearby`);
-      setNearbyOffers(response.data.slice(0, 3));
+      setNearbyOffers(response.data.slice(0, Math.min(MAX_NEARBY_OFFERS, response.data.length)));
     } catch (err) {
-      navigate(MAIN_URL);
+      navigate(NOT_FOUND_URL);
     }
   };
 

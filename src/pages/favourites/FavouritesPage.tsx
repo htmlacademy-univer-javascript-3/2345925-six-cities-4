@@ -1,7 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
 import { FC } from 'react';
 import { OffersForCity } from './components/OffersForCity';
 import { Offer } from '../../types/offer';
@@ -14,8 +10,14 @@ export interface FavouritesPageProps {
 
 export const FavoritesPage: FC<FavouritesPageProps> = () => {
   const offers = useSelector(selectOffersList)?.filter((offer) => offer.isFavorite);
-  const offersByCities = Object.groupBy(offers ? offers : [], (item: Offer) => item.city.name);
-
+  const offersByCities = (offers || []).reduce<Record<string, Offer[]>>((acc, offer) => {
+    const key = offer.city.name;
+    if (!acc[key]) {
+      acc[key] = [];
+    }
+    acc[key].push(offer);
+    return acc;
+  }, {});
   return (
     <div className="page">
       <Header />
