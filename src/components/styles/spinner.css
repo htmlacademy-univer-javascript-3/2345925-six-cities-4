@@ -1,0 +1,6 @@
+.spinner {
+    border: solid;
+    border-color: rgba(0, 0, 0, 0.1);
+    border-top-color: #3498db;
+    border-radius: 50%;
+}

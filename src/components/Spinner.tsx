@@ -1,4 +1,5 @@
 import { FC, useEffect, useRef } from 'react';
+import './styles/spinner.css';
 
 export interface SpinnerProps {
     sizeInPixels: number;
@@ -37,11 +38,7 @@ const Spinner: FC<SpinnerProps> = ({sizeInPixels}) => {
       <div ref={ref} className="spinner" style={{
         width: `${sizeInPixels}px`,
         height: `${sizeInPixels}px`,
-        borderWidth: `${sizeInPixels / BORDER_FRACTION}px`,
-        borderStyle: 'solid',
-        borderColor: 'rgba(0, 0, 0, 0.1)',
-        borderTopColor: '#3498db',
-        borderRadius: '50%'
+        borderWidth: `${sizeInPixels / BORDER_FRACTION}px`
       }}
       >
       </div>

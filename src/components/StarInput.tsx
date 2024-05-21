@@ -3,10 +3,10 @@ import { FC } from 'react';
 export interface StarInputProps {
     onChange: (num: number) => void;
     starValue: number;
-    checkedValue: number | undefined;
+    checked: boolean;
 }
 
-export const StarInput: FC<StarInputProps> = ({ onChange, starValue, checkedValue }) => (
+export const StarInput: FC<StarInputProps> = ({ onChange, starValue, checked }) => (
   <>
     <input
       onChange={() => onChange(starValue)}
@@ -15,7 +15,7 @@ export const StarInput: FC<StarInputProps> = ({ onChange, starValue, checkedValu
       value={starValue}
       id={`${starValue}-stars`}
       type="radio"
-      checked={starValue === checkedValue}
+      checked={checked}
     />
     <label
       htmlFor={`${starValue}-stars`}

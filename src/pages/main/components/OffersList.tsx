@@ -16,7 +16,7 @@ const OffersList: FC<OffersListProps> = ({
 
   useEffect(() => {
     dispatch(changeActiveOfferId(activeOfferId));
-  }, [activeOfferId]);
+  }, [activeOfferId, dispatch]);
 
   return (
     <div className="cities__places-list places__list tabs__content">

@@ -47,13 +47,13 @@ const Header: FC<HeaderProps> = ({showSignButton}) => {
                 : <div></div>}
               {toShow ?
                 <li className="header__nav-item">
-                  <a className="header__nav-link"
+                  <div className="header__nav-link"
                     onClick={() => {
                       logOutIfPresent();
                     }}
                   >
                     <span className="header__signout">Sign {user ? 'out' : 'in'}</span>
-                  </a>
+                  </div>
                 </li>
                 : <div></div>}
 

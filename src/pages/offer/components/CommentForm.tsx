@@ -62,7 +62,7 @@ export const CommentForm: FC<CommentFormProps> = ({ offerId, afterFormSend }) =>
             starValue={star}
             onChange={() => setData({...data, rating: star} as FormData)}
             key={star}
-            checkedValue={data.rating}
+            checked={data.rating === star}
           />
         ))}
       </div>

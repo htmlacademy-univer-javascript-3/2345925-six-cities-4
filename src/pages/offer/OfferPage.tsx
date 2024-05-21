@@ -1,5 +1,5 @@
 import { FC, useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { CommentForm } from './components/CommentForm';
 import { CommentsList } from './components/CommentsList';
 import { Map } from '../../components/Map';
@@ -16,7 +16,7 @@ import { useSelector } from 'react-redux';
 import { selectAuthStatus, selectOffersList } from '../../state/selectors';
 import { AuthStatus } from '../../types/authStatus';
 import FavouriteButton from '../../components/FavouriteButton';
-import { NOT_FOUND_URL } from '../../const/url';
+import NotFoundPage from '../not-found/NotFoundPage';
 
 const MAX_PREVIEW_IMAGES = 6;
 const MAX_NEARBY_OFFERS = 3;
@@ -25,18 +25,18 @@ const PRO_HOST_CLASS = 'offer__avatar-wrapper--pro';
 export const OfferPage: FC = () => {
   const { id } = useParams();
   const allOffers = useSelector(selectOffersList);
-  const navigate = useNavigate();
   const [offerInfo, setOfferInfo] = useState<FullOfferInfo | undefined>(undefined);
   const [comments, setComments] = useState<Comment[] | undefined>(undefined);
   const [nearbyOffers, setNearbyOffers] = useState<Offer[] | undefined>(undefined);
   const authStatus = useSelector(selectAuthStatus);
+  const [notFound, setNotFound] = useState<boolean>(false);
 
   const getComments = async () => {
     try {
       const response = await axiosInstance.get<Comment[]>(`${GET_COMMENTS}/${id}`);
       setComments(response.data);
     } catch (err) {
-      navigate(NOT_FOUND_URL);
+      setNotFound(true);
     }
   };
   const getOfferInfo = async () => {
@@ -44,7 +44,7 @@ export const OfferPage: FC = () => {
       const response = await axiosInstance.get<FullOfferInfo>(`${GET_OFFERS}/${id}`);
       setOfferInfo(response.data);
     } catch (err) {
-      navigate(NOT_FOUND_URL);
+      setNotFound(true);
     }
   };
   const getNearbyOffers = async () => {
@@ -52,7 +52,7 @@ export const OfferPage: FC = () => {
       const response = await axiosInstance.get<Offer[]>(`${GET_OFFERS}/${id}/nearby`);
       setNearbyOffers(response.data.slice(0, Math.min(MAX_NEARBY_OFFERS, response.data.length)));
     } catch (err) {
-      navigate(NOT_FOUND_URL);
+      setNotFound(true);
     }
   };
 
@@ -62,6 +62,9 @@ export const OfferPage: FC = () => {
     getComments();
   }, [id, allOffers]);
 
+  if(notFound) {
+    return <NotFoundPage />;
+  }
 
   return (
     <div className="page">
