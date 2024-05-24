@@ -15,8 +15,7 @@ axiosInstance.interceptors.request.use(
       config.headers['X-token'] = token;
     }
     return config;
-  },
-  (error) => Promise.reject(error)
+  }
 );
 
 export const setAuthToken = (token: string | undefined) => {
