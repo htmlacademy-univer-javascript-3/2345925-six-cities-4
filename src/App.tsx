@@ -1,24 +1,22 @@
 import { FC } from 'react';
 import MainPage from './pages/main/MainPage';
-
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
 import { LoginPage } from './pages/login/LoginPage';
 import { FavoritesPage } from './pages/favourites/FavouritesPage';
-import { OfferPage } from './pages/offer/OfferPage';
+import OfferPage from './pages/offer/OfferPage';
 import NotFoundPage from './pages/not-found/NotFoundPage';
 import Private from './components/Private';
 import { FAVOURITES_URL, LOGIN_URL, MAIN_URL, OFFER_URL } from './const/url';
-import { Offer } from './types/offer';
-import { fetchOffersList } from './state/actions';
+import { fetchOffersList, fetchUser } from './state/actions';
 import { useAppDispatch } from './state';
 
 export interface AppProps {
-    offers: Offer[];
 }
 
 const App: FC<AppProps> = () => {
   const dispatch = useAppDispatch();
   dispatch(fetchOffersList());
+  dispatch(fetchUser());
 
   return (
     <BrowserRouter>

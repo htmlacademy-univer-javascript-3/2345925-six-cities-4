@@ -1,11 +1,28 @@
 import axios, { AxiosInstance } from 'axios';
 import { BASE_URL, TIMEOUT } from './const/apiConsts';
 
+const API_TOKEN_KEY = 'six-cities-token';
+
 export const axiosInstance: AxiosInstance = axios.create({
   baseURL: BASE_URL,
   timeout: TIMEOUT
 });
 
+axiosInstance.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem(API_TOKEN_KEY);
+    if (token) {
+      config.headers['X-token'] = token;
+    }
+    return config;
+  },
+  (error) => Promise.reject(error)
+);
+
 export const setAuthToken = (token: string | undefined) => {
-  axiosInstance.defaults.headers.common['X-Token'] = token;
+  if(token){
+    localStorage.setItem(API_TOKEN_KEY, token);
+  } else {
+    localStorage.removeItem(API_TOKEN_KEY);
+  }
 };

@@ -1,12 +1,13 @@
 import { FC } from 'react';
-import { Review } from '../../../types/review';
+import { Comment } from '../../../types/comment';
 import { formatDateMonthYYYY, formatDateToYYYYMMDD } from '../../../utils/datetime';
+import React from 'react';
 
 export interface ReviewCardProps {
-  review: Review;
+  review: Comment;
 }
 
-export const ReviewCard: FC<ReviewCardProps> = ({ review }) => (
+const CommentCard: FC<ReviewCardProps> = ({ review }) => (
   <li className="reviews__item">
     <div className="reviews__user user">
       <div className="reviews__avatar-wrapper user__avatar-wrapper">
@@ -37,3 +38,7 @@ export const ReviewCard: FC<ReviewCardProps> = ({ review }) => (
     </div>
   </li>
 );
+
+const memoCommentCard = React.memo(CommentCard, (prev, next) => prev.review.id === next.review.id);
+
+export default memoCommentCard;

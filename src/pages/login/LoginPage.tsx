@@ -13,17 +13,34 @@ interface FormState {
   password: string;
 }
 
+const isValidPassword = (input: string): boolean => {
+  const hasChar = /[a-zA-Z]/.test(input);
+  const hasDigit = /\d/.test(input);
+  return hasChar && hasDigit;
+};
+
 export const LoginPage: FC = () => {
   const [formData, setFormData] = useState<FormState>({email: '', password: ''});
+  const [formDisabled, setFormDisabled] = useState<boolean>(false);
   const dispatch = useAppDispatch();
   const authStatus = useSelector(selectAuthStatus);
   const navigate = useNavigate();
   const onSubmit = (event: FormEvent) => {
     event.preventDefault();
+    if(!isValidPassword(formData.password)) {
+      // eslint-disable-next-line no-alert
+      alert('Password should have at least 1 digit and 1 character');
+      return;
+    }
+    setFormDisabled(true);
     dispatch(logIn(formData)).then((value) => {
       if(value.payload === true) {
         navigate(MAIN_URL);
+      } else {
+        // eslint-disable-next-line no-alert
+        alert('You wasn\'t logged in. Try again!');
       }
+      setFormDisabled(false);
     });
   };
   if(authStatus === AuthStatus.AUTHORIZED) {
@@ -62,7 +79,10 @@ export const LoginPage: FC = () => {
                   onChange={(ev) => setFormData({...formData, password: ev.target.value})}
                 />
               </div>
-              <button className="login__submit form__submit button" type="submit">
+              <button className="login__submit form__submit button"
+                type="submit"
+                disabled={formDisabled}
+              >
               Sign in
               </button>
             </form>

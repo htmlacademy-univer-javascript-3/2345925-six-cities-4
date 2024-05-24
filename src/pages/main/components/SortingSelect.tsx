@@ -1,3 +1,4 @@
+import React from 'react';
 import { FC, useEffect, useState } from 'react';
 
 export enum SortType {
@@ -18,7 +19,7 @@ const SortingSelect: FC<SortingSelectProps> = ({ onSortSelected }) => {
 
   useEffect(() => {
     onSortSelected(sortType);
-  }, [sortType]);
+  }, [onSortSelected, sortType]);
 
   return (
     <form className="places__sorting" action="#" method="get">
@@ -53,4 +54,6 @@ const SortingSelect: FC<SortingSelectProps> = ({ onSortSelected }) => {
   );
 };
 
-export default SortingSelect;
+const memoSortingSelect = React.memo(SortingSelect);
+
+export default memoSortingSelect;

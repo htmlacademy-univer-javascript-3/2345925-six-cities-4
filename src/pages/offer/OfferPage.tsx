@@ -1,27 +1,67 @@
-import { FC } from 'react';
+import { FC, useCallback, useEffect, useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { OFFERS_DATA } from '../../mock/offers';
-import { SendReviewForm } from './components/SendReviewForm';
-import { REVIEWS_FOR_OFFERS } from '../../mock/reviews';
-import { ReviewList } from './components/ReviewList';
-import { Map } from '../../components/Map';
-import { offerToMapPoint } from '../../utils/mapUtils';
-import OffersList from '../../components/offers/OffersList';
 import { useSelector } from 'react-redux';
-import { selectOffersList } from '../../state/selectors';
 import Header from '../../components/Header';
+import Spinner from '../../components/Spinner';
+import NotFoundPage from '../not-found/NotFoundPage';
+import FavouriteButton from '../../components/FavouriteButton';
+import CommentForm from './components/CommentForm';
+import CommentsList from './components/CommentsList';
+import NearbyOffersList from './components/NearbyOffersList';
+import { Map } from '../../components/Map';
+import { axiosInstance } from '../../api';
+import { GET_COMMENTS, GET_OFFERS } from '../../const/apiConsts';
+import { offerToMapPoint } from '../../utils/mapUtils';
+import { selectAuthStatus, selectOffersList } from '../../state/selectors';
+import { AuthStatus } from '../../types/authStatus';
+import { FullOfferInfo } from '../../types/fullOfferInfo';
+import { Offer } from '../../types/offer';
+import { Comment } from '../../types/comment';
 
-export const OfferPage: FC = () => {
+const MAX_PREVIEW_IMAGES = 6;
+const MAX_NEARBY_OFFERS = 3;
+const PRO_HOST_CLASS = 'offer__avatar-wrapper--pro';
+
+const OfferPage: FC = () => {
   const { id } = useParams();
-  const offerInfo = useSelector(selectOffersList)?.find((it) => String(it.id) === id);
-  const reviews = REVIEWS_FOR_OFFERS.find((it) => String(it.offerId) === id)?.reviews;
-  const nearbyOffers = OFFERS_DATA.slice(0, 3);
+  const allOffers = useSelector(selectOffersList);
+  const authStatus = useSelector(selectAuthStatus);
 
-  if(!offerInfo) {
-    return (
-      <>
-      </>
-    );
+  const [offerInfo, setOfferInfo] = useState<FullOfferInfo | undefined>(undefined);
+  const [comments, setComments] = useState<Comment[]>([]);
+  const [nearbyOffers, setNearbyOffers] = useState<Offer[]>([]);
+  const [notFound, setNotFound] = useState<boolean>(false);
+
+  const fetchData = useCallback(async () => {
+    try {
+      const [offerResponse, commentsResponse, nearbyResponse] = await Promise.all([
+        axiosInstance.get<FullOfferInfo>(`${GET_OFFERS}/${id}`),
+        axiosInstance.get<Comment[]>(`${GET_COMMENTS}/${id}`),
+        axiosInstance.get<Offer[]>(`${GET_OFFERS}/${id}/nearby`)
+      ]);
+
+      setOfferInfo(offerResponse.data);
+      setComments(commentsResponse.data);
+      setNearbyOffers(nearbyResponse.data.slice(0, MAX_NEARBY_OFFERS));
+    } catch (err) {
+      setNotFound(true);
+    }
+  }, [id]);
+
+  useEffect(() => {
+    fetchData();
+  }, [fetchData, allOffers]);
+
+  const memoizedOfferInfo = useMemo(() => offerInfo, [offerInfo]);
+  const memoizedComments = useMemo(() => comments, [comments]);
+  const memoizedNearbyOffers = useMemo(() => nearbyOffers, [nearbyOffers]);
+
+  if (notFound) {
+    return <NotFoundPage />;
+  }
+
+  if (!memoizedOfferInfo) {
+    return <Spinner sizeInPixels={100} />;
   }
 
   return (
@@ -31,156 +71,88 @@ export const OfferPage: FC = () => {
         <section className="offer">
           <div className="offer__gallery-container container">
             <div className="offer__gallery">
-              <div className="offer__image-wrapper">
-                <img
-                  className="offer__image"
-                  src={offerInfo.previewImage}
-                  alt="Photo studio"
-                />
-              </div>
-              <div className="offer__image-wrapper">
-                <img
-                  className="offer__image"
-                  src={offerInfo.previewImage}
-                  alt="Photo studio"
-                />
-              </div>
-              <div className="offer__image-wrapper">
-                <img
-                  className="offer__image"
-                  src={offerInfo.previewImage}
-                  alt="Photo studio"
-                />
-              </div>
-              <div className="offer__image-wrapper">
-                <img
-                  className="offer__image"
-                  src={offerInfo.previewImage}
-                  alt="Photo studio"
-                />
-              </div>
-              <div className="offer__image-wrapper">
-                <img
-                  className="offer__image"
-                  src={offerInfo.previewImage}
-                  alt="Photo studio"
-                />
-              </div>
-              <div className="offer__image-wrapper">
-                <img
-                  className="offer__image"
-                  src={offerInfo.previewImage}
-                  alt="Photo studio"
-                />
-              </div>
+              {memoizedOfferInfo.images.slice(0, MAX_PREVIEW_IMAGES).map((image) => (
+                <div className="offer__image-wrapper" key={image}>
+                  <img className="offer__image" src={image} alt="Photo studio" />
+                </div>
+              ))}
             </div>
           </div>
           <div className="offer__container container">
             <div className="offer__wrapper">
-              <div className="offer__mark">
-                <span>{offerInfo.isPremium === true ? 'Premium' : ''}</span>
-              </div>
+              {memoizedOfferInfo.isPremium && (
+                <div className="offer__mark">
+                  <span>Premium</span>
+                </div>
+              )}
               <div className="offer__name-wrapper">
-                <h1 className="offer__name">
-                  {offerInfo.title}
-                </h1>
-                <button className="offer__bookmark-button button" type="button">
-                  <svg className="offer__bookmark-icon" width="31" height="33">
-                    <use xlinkHref="#icon-bookmark"></use>
-                  </svg>
-                  <span className="visually-hidden">In bookmarks</span>
-                </button>
+                <h1 className="offer__name">{memoizedOfferInfo.title}</h1>
+                <FavouriteButton id={memoizedOfferInfo.id} isFavourite={memoizedOfferInfo.isFavorite} stylePrefix="offer" width={31} height={33} />
               </div>
               <div className="offer__rating rating">
                 <div className="offer__stars rating__stars">
-                  <span style={{ width: `${offerInfo.rating * 20}%` }}></span>
+                  <span style={{ width: `${Math.round(memoizedOfferInfo.rating) * 20}%` }}></span>
                   <span className="visually-hidden">Rating</span>
                 </div>
-                <span className="offer__rating-value rating__value">{offerInfo.rating}</span>
+                <span className="offer__rating-value rating__value">{memoizedOfferInfo.rating}</span>
               </div>
               <ul className="offer__features">
-                <li className="offer__feature offer__feature--entire">
-                  {offerInfo.type}
-                </li>
-                <li className="offer__feature offer__feature--bedrooms">
-                  3 Bedrooms
-                </li>
-                <li className="offer__feature offer__feature--adults">
-                  Max 4 adults
-                </li>
+                <li className="offer__feature offer__feature--entire">{memoizedOfferInfo.type}</li>
+                <li className="offer__feature offer__feature--bedrooms">{memoizedOfferInfo.bedrooms} Bedroom{memoizedOfferInfo.bedrooms !== 1 ? 's' : ''}</li>
+                <li className="offer__feature offer__feature--adults">Max {memoizedOfferInfo.maxAdults} adult{memoizedOfferInfo.maxAdults !== 1 ? 's' : ''}</li>
               </ul>
               <div className="offer__price">
-                <b className="offer__price-value">&euro;120</b>
+                <b className="offer__price-value">&euro;{memoizedOfferInfo.price}</b>
                 <span className="offer__price-text">&nbsp;night</span>
               </div>
               <div className="offer__inside">
                 <h2 className="offer__inside-title">What&apos;s inside</h2>
                 <ul className="offer__inside-list">
-                  <li className="offer__inside-item">Wi-Fi</li>
-                  <li className="offer__inside-item">Washing machine</li>
-                  <li className="offer__inside-item">Towels</li>
-                  <li className="offer__inside-item">Heating</li>
-                  <li className="offer__inside-item">Coffee machine</li>
-                  <li className="offer__inside-item">Baby seat</li>
-                  <li className="offer__inside-item">Kitchen</li>
-                  <li className="offer__inside-item">Dishwasher</li>
-                  <li className="offer__inside-item">Cabel TV</li>
-                  <li className="offer__inside-item">Fridge</li>
+                  {memoizedOfferInfo.goods.map((good) => <li className="offer__inside-item" key={good}>{good}</li>)}
                 </ul>
               </div>
               <div className="offer__host">
                 <h2 className="offer__host-title">Meet the host</h2>
-                <div className="offer__host-user user">
-                  <div className="offer__avatar-wrapper offer__avatar-wrapper--pro user__avatar-wrapper">
-                    <img
-                      className="offer__avatar user__avatar"
-                      src="img/avatar-angelina.jpg"
-                      width="74"
-                      height="74"
-                      alt="Host avatar"
-                    />
-                  </div>
-                  <span className="offer__user-name">Angelina</span>
-                  <span className="offer__user-status">Pro</span>
+                <div className={`offer__avatar-wrapper ${memoizedOfferInfo.host.isPro ? PRO_HOST_CLASS : ''} user__avatar-wrapper`}>
+                  <img className="offer__avatar user__avatar" src={memoizedOfferInfo.host.avatarUrl} width="74" height="74" alt="Host avatar" />
                 </div>
+                <span className="offer__user-name">{memoizedOfferInfo.host.name}</span>
+                <span className="offer__user-status">{memoizedOfferInfo.host.isPro ? 'Pro' : ''}</span>
                 <div className="offer__description">
-                  <p className="offer__text">
-                    A quiet cozy and picturesque that hides behind a a river by
-                    the unique lightness of Amsterdam. The building is green and
-                    from 18th century.
-                  </p>
-                  <p className="offer__text">
-                    An independent House, strategically located between Rembrand
-                    Square and National Opera, but where the bustle of the city
-                    comes to rest in this alley flowery and colorful.
-                  </p>
+                  <p className="offer__text">{memoizedOfferInfo.description}</p>
                 </div>
               </div>
               <section className="offer__reviews reviews">
-                <ReviewList reviews={reviews} />
-                <SendReviewForm />
+                <CommentsList reviews={memoizedComments} />
+                {authStatus === AuthStatus.AUTHORIZED ?
+                  <CommentForm offerId={memoizedOfferInfo.id}
+                    afterFormSend={() => {
+                      fetchData();
+                    }}
+                  />
+                  :
+                  <div />}
               </section>
             </div>
           </div>
-          <section className="offer__map map" style={{width: '800px', marginLeft: 'auto', marginRight: 'auto'}}>
-            <Map
-              city={offerInfo.city}
-              points={nearbyOffers.map((it) => offerToMapPoint(it))}
-              selectedPointId={undefined}
-            />
-          </section>
+          {memoizedNearbyOffers.length > 0 ? (
+            <section className="offer__map map" style={{ width: '800px', marginLeft: 'auto', marginRight: 'auto' }}>
+              <Map city={memoizedOfferInfo.city} points={[...memoizedNearbyOffers, memoizedOfferInfo].map(offerToMapPoint)} selectedPointId={memoizedOfferInfo.id} />
+            </section>
+          ) : (
+            <Spinner sizeInPixels={100} />
+          )}
         </section>
-        <div className="container">
-          <section className="near-places places">
-            <h2 className="near-places__title">
-              Other places in the neighbourhood
-            </h2>
-            <div className="near-places__list places__list">
-              <OffersList offers={nearbyOffers} />
-            </div>
-          </section>
-        </div>
+        {memoizedNearbyOffers.length > 0 && (
+          <div className="container">
+            <section className="near-places places">
+              <NearbyOffersList offers={memoizedNearbyOffers} />
+            </section>
+          </div>
+        )}
       </main>
     </div>
   );
 };
+
+export default OfferPage;

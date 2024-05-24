@@ -1,14 +1,15 @@
 /* eslint-disable react/jsx-no-useless-fragment */
 import { FC } from 'react';
-import { FavouritesOffer } from './FavouritesOffer';
+import FavouritesOffer from './FavouritesOffer';
 import { Offer } from '../../../types/offer';
+import React from 'react';
 
 export interface OffresForCityProps {
     offers: Offer[] | null;
     city: string;
 }
 
-export const OffersForCity: FC<OffresForCityProps> = ({ offers, city }) => {
+const OffersForCity: FC<OffresForCityProps> = ({ offers, city }) => {
 
   if(!offers) {
     return (
@@ -33,3 +34,7 @@ export const OffersForCity: FC<OffresForCityProps> = ({ offers, city }) => {
     </li>
   );
 };
+
+const memoOffersForCity = React.memo(OffersForCity, (prev, next) => prev.city === next.city && prev.offers?.length === next.offers?.length);
+
+export default memoOffersForCity;

@@ -19,3 +19,9 @@ export function formatDateToYYYYMMDD(dateString: string): string {
 
   return `${year}-${month}-${day}`;
 }
+
+export function compareDates(a: string, b: string): number {
+  const dateA: Date = new Date(a);
+  const dateB: Date = new Date(b);
+  return dateA < dateB ? 1 : -1;
+}
