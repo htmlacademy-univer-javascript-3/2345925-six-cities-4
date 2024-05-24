@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import { selectCurrentUser, selectOffersList } from '../state/selectors';
 import { useAppDispatch } from '../state';
 import { logOut } from '../state/actions';
+import React from 'react';
 
 export interface HeaderProps {
     showSignButton?: boolean;
@@ -65,4 +66,6 @@ const Header: FC<HeaderProps> = ({showSignButton}) => {
   );
 };
 
-export default Header;
+const MemoHeader = React.memo(Header);
+
+export default MemoHeader;

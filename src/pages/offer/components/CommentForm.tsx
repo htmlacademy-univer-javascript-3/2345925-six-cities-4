@@ -1,5 +1,5 @@
-import { FC, FormEvent, useEffect, useState } from 'react';
-import { StarInput } from '../../../components/StarInput';
+import React, { FC, FormEvent, useEffect, useState } from 'react';
+import StarInput from '../../../components/StarInput';
 import { axiosInstance } from '../../../api';
 import { SEND_FORM } from '../../../const/apiConsts';
 
@@ -17,7 +17,7 @@ export interface CommentFormProps {
   afterFormSend: () => void;
 }
 
-export const CommentForm: FC<CommentFormProps> = ({ offerId, afterFormSend }) => {
+const CommentForm: FC<CommentFormProps> = ({ offerId, afterFormSend }) => {
 
   const [data, setData] = useState<FormData>({rating: undefined, comment: ''});
   const [submitDisabled, setSumitDisabled] = useState(true);
@@ -37,7 +37,7 @@ export const CommentForm: FC<CommentFormProps> = ({ offerId, afterFormSend }) =>
       try {
         setSumitDisabled(true);
         await axiosInstance.post<Comment>(`${SEND_FORM}/${offerId}`, data);
-        setData({rating: 0, comment: ''});
+        setData({rating: undefined, comment: ''});
         afterFormSend();
       } catch (err) {
         // eslint-disable-next-line no-alert
@@ -92,3 +92,5 @@ export const CommentForm: FC<CommentFormProps> = ({ offerId, afterFormSend }) =>
     </form>
   );
 };
+
+export default CommentForm;

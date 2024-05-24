@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { OffersForCity } from './components/OffersForCity';
+import OffersForCity from './components/OffersForCity';
 import { Offer } from '../../types/offer';
 import Header from '../../components/Header';
 import { useSelector } from 'react-redux';

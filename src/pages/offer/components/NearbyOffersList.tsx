@@ -1,6 +1,7 @@
 import { FC } from 'react';
 import { Offer } from '../../../types/offer';
 import NearbyOfferCard from './NearbyOfferCard';
+import React from 'react';
 
 const NearbyOffersList: FC<{ offers: Offer[] }> = ({ offers }) => (
   <section className="near-places places">
@@ -13,4 +14,6 @@ const NearbyOffersList: FC<{ offers: Offer[] }> = ({ offers }) => (
   </section>
 );
 
-export default NearbyOffersList;
+const memoNearbyOfferList = React.memo(NearbyOffersList);
+
+export default memoNearbyOfferList;

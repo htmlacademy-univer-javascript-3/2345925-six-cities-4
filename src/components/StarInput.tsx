@@ -6,7 +6,7 @@ export interface StarInputProps {
     checked: boolean;
 }
 
-export const StarInput: FC<StarInputProps> = ({ onChange, starValue, checked }) => (
+const StarInput: FC<StarInputProps> = ({ onChange, starValue, checked }) => (
   <>
     <input
       onChange={() => onChange(starValue)}
@@ -28,3 +28,5 @@ export const StarInput: FC<StarInputProps> = ({ onChange, starValue, checked }) 
     </label>
   </>
 );
+
+export default StarInput;

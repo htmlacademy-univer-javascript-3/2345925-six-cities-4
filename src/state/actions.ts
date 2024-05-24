@@ -33,11 +33,11 @@ export const fetchUser = createAsyncThunk<void, undefined, ThunkConfig>('auth/ge
   const response = await extra.get<User>(GET_USER);
   if(response.status === 401) {
     dispatch(changeAuthStatus(AuthStatus.NOT_AUTORIZED));
-    dispatch(changeUser(response.data));
+    dispatch(changeUser(undefined));
     return;
   }
   dispatch(changeAuthStatus(AuthStatus.AUTHORIZED));
-  dispatch(changeUser(undefined));
+  dispatch(changeUser(response.data));
 });
 
 export const logIn = createAsyncThunk<boolean, { email: string; password: string }, ThunkConfig>('auth/logIn', async (

@@ -3,6 +3,7 @@ import { Offer } from '../../../types/offer';
 import { Link } from 'react-router-dom';
 import { OFFER_URL } from '../../../const/url';
 import FavouriteButton from '../../../components/FavouriteButton';
+import React from 'react';
 
 const NearbyOfferCard: FC<{ offer: Offer }> = ({ offer }) => (
   <article className="near-places__card place-card">
@@ -37,4 +38,6 @@ const NearbyOfferCard: FC<{ offer: Offer }> = ({ offer }) => (
   </article>
 );
 
-export default NearbyOfferCard;
+const memoNearbyOfferCard = React.memo(NearbyOfferCard, (prev, next) => prev.offer.id === next.offer.id && prev.offer.isFavorite === next.offer.isFavorite);
+
+export default memoNearbyOfferCard;

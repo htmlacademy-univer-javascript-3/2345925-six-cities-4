@@ -2,6 +2,7 @@ import { FC } from 'react';
 import { Link } from 'react-router-dom';
 import { Offer } from '../../../types/offer';
 import FavouriteButton from '../../../components/FavouriteButton';
+import React from 'react';
 
 export interface CardProps {
     offer: Offer;
@@ -58,4 +59,6 @@ const Card: FC<CardProps> = ({
     </div>
   </article>);
 
-export default Card;
+const MemoCard = React.memo(Card, (prev, next) => prev.offer.id === next.offer.id && prev.offer.isFavorite === next.offer.isFavorite);
+
+export default MemoCard;

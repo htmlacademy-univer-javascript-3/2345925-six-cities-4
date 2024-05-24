@@ -1,7 +1,8 @@
 import { FC } from 'react';
 import { Comment } from '../../../types/comment';
-import { CommentCard } from './CommentCard';
+import CommentCard from './CommentCard';
 import { compareDates } from '../../../utils/datetime';
+import React from 'react';
 
 export interface CommentsListProps {
   reviews: Comment[] | undefined;
@@ -9,7 +10,7 @@ export interface CommentsListProps {
 
 const MAX_COMMENTS_NUMBER = 10;
 
-export const CommentsList: FC<CommentsListProps> = ({reviews}) => {
+const CommentsList: FC<CommentsListProps> = ({reviews}) => {
   if(reviews === undefined || reviews.length === 0) {
     return <h2 className="reviews__title"> There is no comments yet. <br></br> Leave comment first!</h2>;
   }
@@ -29,3 +30,6 @@ export const CommentsList: FC<CommentsListProps> = ({reviews}) => {
   );
 };
 
+const memoCommentsList = React.memo(CommentsList);
+
+export default memoCommentsList;

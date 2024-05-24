@@ -3,13 +3,14 @@ import { Link } from 'react-router-dom';
 import { OFFER_URL } from '../../../const/url';
 import { Offer } from '../../../types/offer';
 import FavouriteButton from '../../../components/FavouriteButton';
+import React from 'react';
 
 
 export interface FavouritesOfferProps {
     offer: Offer;
 }
 
-export const FavouritesOffer: FC<FavouritesOfferProps> = ({ offer }) => (
+const FavouritesOffer: FC<FavouritesOfferProps> = ({ offer }) => (
   <article className="favorites__card place-card">
     <div className="favorites__image-wrapper place-card__image-wrapper">
       <Link to={`${OFFER_URL}/${offer.id}`}>
@@ -45,3 +46,9 @@ export const FavouritesOffer: FC<FavouritesOfferProps> = ({ offer }) => (
     </div>
   </article>
 );
+
+const memoFavouritesOffer = React.memo(FavouritesOffer, (prev, next) =>
+  prev.offer.id === next.offer.id && prev.offer.isFavorite === next.offer.isFavorite
+);
+
+export default memoFavouritesOffer;

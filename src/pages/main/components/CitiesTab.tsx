@@ -5,12 +5,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { changeCity } from '../../../state/actions';
 import { City } from '../../../types/offer';
 import { selectCurrentCity } from '../../../state/selectors';
+import React from 'react';
 
 interface CitiesTabsProps {
   cities: City[];
 }
 
-export const CitiesTabs: FC<CitiesTabsProps> = ({cities}) => {
+const CitiesTabs: FC<CitiesTabsProps> = ({cities}) => {
   const activeCity = useSelector(selectCurrentCity);
   const dispatch = useDispatch();
 
@@ -36,3 +37,7 @@ export const CitiesTabs: FC<CitiesTabsProps> = ({cities}) => {
     </div>
   );
 };
+
+const MemoCitiesTabs = React.memo(CitiesTabs);
+
+export default MemoCitiesTabs;
