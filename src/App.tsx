@@ -7,7 +7,7 @@ import OfferPage from './pages/offer/offer-page';
 import NotFoundPage from './pages/not-found/not-found-page';
 import { FAVOURITES_URL, LOGIN_URL, MAIN_URL, OFFER_URL } from './const/url';
 import { useAppDispatch } from './state';
-import Private from './components/private';
+import Private from './components/private-route';
 import { fetchOffersList } from './state/offer/offer-actions';
 import { fetchUser } from './state/user/user-actions';
 
