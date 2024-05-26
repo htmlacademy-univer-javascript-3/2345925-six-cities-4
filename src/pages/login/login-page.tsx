@@ -1,12 +1,12 @@
 import { FC, FormEvent, useState } from 'react';
 import Header from '../../components/header';
-import { logIn } from '../../state/actions';
 import { useAppDispatch } from '../../state';
 import { MAIN_URL } from '../../const/url';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { selectAuthStatus } from '../../state/selectors';
 import { AuthStatus } from '../../types/auth-status';
+import { logIn } from '../../state/user/user-actions';
 
 interface FormState {
   email: string;

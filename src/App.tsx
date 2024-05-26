@@ -6,9 +6,10 @@ import { FavoritesPage } from './pages/favourites/favourites-page';
 import OfferPage from './pages/offer/offer-page';
 import NotFoundPage from './pages/not-found/not-found-page';
 import { FAVOURITES_URL, LOGIN_URL, MAIN_URL, OFFER_URL } from './const/url';
-import { fetchOffersList, fetchUser } from './state/actions';
 import { useAppDispatch } from './state';
 import Private from './components/private';
+import { fetchOffersList } from './state/offer/offer-actions';
+import { fetchUser } from './state/user/user-actions';
 
 export interface AppProps {
 }

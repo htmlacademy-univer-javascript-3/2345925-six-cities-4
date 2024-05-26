@@ -3,10 +3,10 @@ import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { LOGIN_URL } from '../const/url';
 import { useAppDispatch } from '../state';
-import { changeFavouriteStatus } from '../state/actions';
 import { selectAuthStatus } from '../state/selectors';
 import { AuthStatus } from '../types/auth-status';
 import { FavouriteStatus } from '../types/favourite-status';
+import { changeFavouriteStatus } from '../state/offer/offer-actions';
 
 const DEFAULT_STYLE_GROUP = 'place-card';
 const FAVOURITE_BUTTON_CLASS = 'place-card__bookmark-button--active';

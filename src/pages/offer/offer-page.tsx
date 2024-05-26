@@ -113,20 +113,22 @@ const OfferPage: FC = () => {
               </div>
               <div className="offer__host">
                 <h2 className="offer__host-title">Meet the host</h2>
-                <div className={`offer__avatar-wrapper ${memoizedOfferInfo.host.isPro ? PRO_HOST_CLASS : ''} user__avatar-wrapper`}>
-                  <img className="offer__avatar user__avatar" src={memoizedOfferInfo.host.avatarUrl} width="74" height="74" alt="Host avatar" />
-                </div>
-                <span className="offer__user-name">{memoizedOfferInfo.host.name}</span>
-                <span className="offer__user-status">{memoizedOfferInfo.host.isPro ? 'Pro' : ''}</span>
-                <div className="offer__description">
-                  <p className="offer__text">{memoizedOfferInfo.description}</p>
+                <div className="offer__host-user user">
+                  <div className={`offer__avatar-wrapper ${memoizedOfferInfo.host.isPro ? PRO_HOST_CLASS : ''} user__avatar-wrapper`}>
+                    <img className="offer__avatar user__avatar" src={memoizedOfferInfo.host.avatarUrl} width="74" height="74" alt="Host avatar" />
+                  </div>
+                  <span className="offer__user-name">{memoizedOfferInfo.host.name}</span>
+                  <span className="offer__user-status">{memoizedOfferInfo.host.isPro ? 'Pro' : ''}</span>
+                  <div className="offer__description">
+                    <p className="offer__text">{memoizedOfferInfo.description}</p>
+                  </div>
                 </div>
               </div>
               <section className="offer__reviews reviews">
                 <CommentsList reviews={memoizedComments} />
                 {authStatus === AuthStatus.Authorized ?
                   <CommentForm offerId={memoizedOfferInfo.id}
-                    afterFormSend={() => {
+                    handleFormSend={() => {
                       fetchData();
                     }}
                   />

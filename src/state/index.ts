@@ -1,5 +1,5 @@
-import {configureStore} from '@reduxjs/toolkit';
-import {reducer} from './reducer';
+import { configureStore } from '@reduxjs/toolkit';
+import { rootReducer } from './reducer';
 import { axiosInstance } from '../api';
 import { AxiosInstance } from 'axios';
 import { useDispatch } from 'react-redux';
@@ -10,7 +10,7 @@ export interface ThunkConfig {
     extra: AxiosInstance;
   }
 
-export const store = configureStore({reducer, middleware: (getDefaultMiddleware) =>
+export const store = configureStore({reducer: rootReducer, middleware: (getDefaultMiddleware) =>
   getDefaultMiddleware({
     thunk: {
       extraArgument: axiosInstance
