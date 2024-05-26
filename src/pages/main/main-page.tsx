@@ -1,15 +1,15 @@
 import { FC, useCallback, useMemo, useState } from 'react';
-import OffersList from './components/OffersList';
-import { Map, MapPoint } from '../../components/Map';
+import OffersList from './components/offers-list';
+import { Map, MapPoint } from '../../components/map';
 import { City, Offer } from '../../types/offer';
-import { offerToMapPoint } from '../../utils/mapUtils';
-import CitiesTabs from './components/CitiesTab';
+import { offerToMapPoint } from '../../utils/map-utils';
+import CitiesTabs from './components/cities-tab';
 import { CITIES_DATA } from '../../const/cities';
 import { useSelector } from 'react-redux';
 import { selectActiveOfferId, selectCurrentCity, selectOffersList } from '../../state/selectors';
-import SortingSelect, { SortType } from './components/SortingSelect';
-import Spinner from '../../components/Spinner';
-import Header from '../../components/Header';
+import SortingSelect, { SortType } from './components/sorting-select';
+import Spinner from '../../components/spinner';
+import Header from '../../components/header';
 
 const sortFunctions: Record<SortType, (a: Offer, b: Offer) => number> = {
   [SortType.LOW_PRICE_FIRST]: (a, b) => a.price - b.price,

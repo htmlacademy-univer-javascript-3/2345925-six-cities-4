@@ -1,5 +1,5 @@
 import axios, { AxiosInstance } from 'axios';
-import { BASE_URL, TIMEOUT } from './const/apiConsts';
+import { BASE_URL, TIMEOUT } from './const/api-const';
 
 const API_TOKEN_KEY = 'six-cities-token';
 

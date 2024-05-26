@@ -2,7 +2,7 @@ import { FC } from 'react';
 import { Offer } from '../../../types/offer';
 import { Link } from 'react-router-dom';
 import { OFFER_URL } from '../../../const/url';
-import FavouriteButton from '../../../components/FavouriteButton';
+import FavouriteButton from '../../../components/favourite-button';
 import React from 'react';
 
 const NearbyOfferCard: FC<{ offer: Offer }> = ({ offer }) => (

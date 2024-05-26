@@ -1,6 +1,6 @@
 import { FC, useCallback, useEffect, useState } from 'react';
 import { Offer } from '../../../types/offer';
-import Card from './OfferCard';
+import Card from './offer-card';
 import { useDispatch } from 'react-redux';
 import { changeActiveOfferId } from '../../../state/actions';
 import React from 'react';

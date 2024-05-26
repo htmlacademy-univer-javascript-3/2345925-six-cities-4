@@ -1,11 +1,11 @@
 import { createAction, createAsyncThunk } from '@reduxjs/toolkit';
 import { City, Offer } from '../types/offer';
 import { ThunkConfig } from '.';
-import { GET_USER, GET_OFFERS, LOG_OUT, LOG_IN, CHANGE_FAVOURITE_STATUS } from '../const/apiConsts';
-import { AuthStatus } from '../types/authStatus';
+import { GET_USER, GET_OFFERS, LOG_OUT, LOG_IN, CHANGE_FAVOURITE_STATUS } from '../const/api-const';
+import { AuthStatus } from '../types/auth-status';
 import { User } from '../types/user';
 import { setAuthToken } from '../api';
-import { FavouriteStatus } from '../types/favouriteStatus';
+import { FavouriteStatus } from '../types/favourite-status';
 
 
 export const changeCity = createAction<City>('offers/changeCity');
@@ -32,11 +32,11 @@ export const fetchUser = createAsyncThunk<void, undefined, ThunkConfig>('auth/ge
 ) => {
   const response = await extra.get<User>(GET_USER);
   if(response.status === 401) {
-    dispatch(changeAuthStatus(AuthStatus.NOT_AUTORIZED));
+    dispatch(changeAuthStatus(AuthStatus.NotAuthorized));
     dispatch(changeUser(undefined));
     return;
   }
-  dispatch(changeAuthStatus(AuthStatus.AUTHORIZED));
+  dispatch(changeAuthStatus(AuthStatus.Authorized));
   dispatch(changeUser(response.data));
 });
 
@@ -46,7 +46,7 @@ export const logIn = createAsyncThunk<boolean, { email: string; password: string
 ) => {
   const response = await extra.post<User>(LOG_IN, { email, password });
   if(response.status === 201) {
-    dispatch(changeAuthStatus(AuthStatus.AUTHORIZED));
+    dispatch(changeAuthStatus(AuthStatus.Authorized));
     dispatch(changeUser(response.data));
     setAuthToken(response.data.token);
     dispatch(fetchOffersList());
@@ -61,7 +61,7 @@ export const logOut = createAsyncThunk<void, undefined, ThunkConfig>('auth/logOu
 ) => {
   const response = (await extra.delete<User>(LOG_OUT));
   if(response.status === 204) {
-    dispatch(changeAuthStatus(AuthStatus.NOT_AUTORIZED));
+    dispatch(changeAuthStatus(AuthStatus.NotAuthorized));
     dispatch(changeUser(undefined));
     setAuthToken(undefined);
     dispatch(fetchOffersList());

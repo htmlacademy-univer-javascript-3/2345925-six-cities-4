@@ -1,7 +1,7 @@
 import React, { FC, FormEvent, useEffect, useState } from 'react';
-import StarInput from '../../../components/StarInput';
+import StarInput from '../../../components/star-input';
 import { axiosInstance } from '../../../api';
-import { SEND_FORM } from '../../../const/apiConsts';
+import { SEND_FORM } from '../../../const/api-const';
 
 const starValues = [5, 4, 3, 2, 1];
 const MIN_REVIEW_SYMBOLS = 50;

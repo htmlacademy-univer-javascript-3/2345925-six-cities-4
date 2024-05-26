@@ -2,7 +2,7 @@ import { City, Offer } from '../types/offer';
 import { createReducer } from '@reduxjs/toolkit';
 import { changeActiveOfferId, changeAuthStatus, changeCity, changeOffersList, changeUser } from './actions';
 import { CITIES_DATA } from '../const/cities';
-import { AuthStatus } from '../types/authStatus';
+import { AuthStatus } from '../types/auth-status';
 import { User } from '../types/user';
 
 interface StoreState {
@@ -17,7 +17,7 @@ const initialState: StoreState = {
   city: CITIES_DATA[0],
   offersList: undefined,
   activeOfferId: undefined,
-  authStatus: AuthStatus.NOT_AUTORIZED,
+  authStatus: AuthStatus.NotAuthorized,
   user: undefined
 };
 

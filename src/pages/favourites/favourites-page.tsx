@@ -1,7 +1,7 @@
 import { FC } from 'react';
-import OffersForCity from './components/OffersForCity';
+import OffersForCity from './components/offers-for-city';
 import { Offer } from '../../types/offer';
-import Header from '../../components/Header';
+import Header from '../../components/header';
 import { useSelector } from 'react-redux';
 import { selectOffersList } from '../../state/selectors';
 

@@ -1,20 +1,20 @@
 import { FC, useCallback, useEffect, useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import Header from '../../components/Header';
-import Spinner from '../../components/Spinner';
-import NotFoundPage from '../not-found/NotFoundPage';
-import FavouriteButton from '../../components/FavouriteButton';
-import CommentForm from './components/CommentForm';
-import CommentsList from './components/CommentsList';
-import NearbyOffersList from './components/NearbyOffersList';
-import { Map } from '../../components/Map';
+import Header from '../../components/header';
+import Spinner from '../../components/spinner';
+import NotFoundPage from '../not-found/not-found-page';
+import FavouriteButton from '../../components/favourite-button';
+import CommentForm from './components/comment-form';
+import CommentsList from './components/comments-list';
+import NearbyOffersList from './components/nearby-offers-list';
+import { Map } from '../../components/map';
 import { axiosInstance } from '../../api';
-import { GET_COMMENTS, GET_OFFERS } from '../../const/apiConsts';
-import { offerToMapPoint } from '../../utils/mapUtils';
+import { GET_COMMENTS, GET_OFFERS } from '../../const/api-const';
+import { offerToMapPoint } from '../../utils/map-utils';
 import { selectAuthStatus, selectOffersList } from '../../state/selectors';
-import { AuthStatus } from '../../types/authStatus';
-import { FullOfferInfo } from '../../types/fullOfferInfo';
+import { AuthStatus } from '../../types/auth-status';
+import { FullOfferInfo } from '../../types/full-offer-info';
 import { Offer } from '../../types/offer';
 import { Comment } from '../../types/comment';
 
@@ -124,7 +124,7 @@ const OfferPage: FC = () => {
               </div>
               <section className="offer__reviews reviews">
                 <CommentsList reviews={memoizedComments} />
-                {authStatus === AuthStatus.AUTHORIZED ?
+                {authStatus === AuthStatus.Authorized ?
                   <CommentForm offerId={memoizedOfferInfo.id}
                     afterFormSend={() => {
                       fetchData();

@@ -5,8 +5,8 @@ import { LOGIN_URL } from '../const/url';
 import { useAppDispatch } from '../state';
 import { changeFavouriteStatus } from '../state/actions';
 import { selectAuthStatus } from '../state/selectors';
-import { AuthStatus } from '../types/authStatus';
-import { FavouriteStatus } from '../types/favouriteStatus';
+import { AuthStatus } from '../types/auth-status';
+import { FavouriteStatus } from '../types/favourite-status';
 
 const DEFAULT_STYLE_GROUP = 'place-card';
 const FAVOURITE_BUTTON_CLASS = 'place-card__bookmark-button--active';
@@ -28,7 +28,7 @@ const FavouriteButton: FC<FavouriteButtonProps> = ({isFavourite, id, stylePrefix
 
   const onFavouriteClick = (isFavorite: boolean, offerId: string) => {
 
-    if(authStatus === AuthStatus.NOT_AUTORIZED) {
+    if(authStatus === AuthStatus.NotAuthorized) {
       navigate(LOGIN_URL);
     }
     const newStatus = isFavorite ? FavouriteStatus.USUAL : FavouriteStatus.FAVOURITE;
