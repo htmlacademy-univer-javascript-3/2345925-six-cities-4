@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-no-useless-fragment */
 import { FC } from 'react';
-import FavouritesOffer from './FavouritesOffer';
+import FavouritesOffer from './favourites-offer';
 import { Offer } from '../../../types/offer';
 import React from 'react';
 

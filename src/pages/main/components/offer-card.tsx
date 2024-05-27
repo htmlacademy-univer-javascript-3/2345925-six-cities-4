@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { Link } from 'react-router-dom';
 import { Offer } from '../../../types/offer';
-import FavouriteButton from '../../../components/FavouriteButton';
+import FavouriteButton from '../../../components/favourite-button';
 import React from 'react';
 
 export interface CardProps {

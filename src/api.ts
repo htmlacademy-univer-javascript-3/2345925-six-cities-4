@@ -1,5 +1,5 @@
 import axios, { AxiosInstance } from 'axios';
-import { BASE_URL, TIMEOUT } from './const/apiConsts';
+import { BASE_URL, TIMEOUT } from './const/api-const';
 
 const API_TOKEN_KEY = 'six-cities-token';
 
@@ -15,8 +15,7 @@ axiosInstance.interceptors.request.use(
       config.headers['X-token'] = token;
     }
     return config;
-  },
-  (error) => Promise.reject(error)
+  }
 );
 
 export const setAuthToken = (token: string | undefined) => {

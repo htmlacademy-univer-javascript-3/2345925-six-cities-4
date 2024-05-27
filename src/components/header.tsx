@@ -4,8 +4,8 @@ import { FAVOURITES_URL, LOGIN_URL, MAIN_URL } from '../const/url';
 import { useSelector } from 'react-redux';
 import { selectCurrentUser, selectOffersList } from '../state/selectors';
 import { useAppDispatch } from '../state';
-import { logOut } from '../state/actions';
 import React from 'react';
+import { logOut } from '../state/user/user-actions';
 
 export interface HeaderProps {
     showSignButton?: boolean;

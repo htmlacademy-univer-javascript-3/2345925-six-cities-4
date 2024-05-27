@@ -1,6 +1,6 @@
 import { Offer } from '../types/offer';
-import { MapPoint } from '../components/Map';
-import { FullOfferInfo } from '../types/fullOfferInfo';
+import { MapPoint } from '../components/map';
+import { FullOfferInfo } from '../types/full-offer-info';
 
 export const offerToMapPoint = (offer: Offer | FullOfferInfo) => ({
   id: offer.id,

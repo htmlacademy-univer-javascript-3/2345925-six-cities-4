@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { Offer } from '../../../types/offer';
-import NearbyOfferCard from './NearbyOfferCard';
+import NearbyOfferCard from './nearby-offers-card';
 import React from 'react';
 
 const NearbyOffersList: FC<{ offers: Offer[] }> = ({ offers }) => (

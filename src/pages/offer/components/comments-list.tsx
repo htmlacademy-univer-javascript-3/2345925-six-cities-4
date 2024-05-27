@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { Comment } from '../../../types/comment';
-import CommentCard from './CommentCard';
+import CommentCard from './comment-card';
 import { compareDates } from '../../../utils/datetime';
 import React from 'react';
 

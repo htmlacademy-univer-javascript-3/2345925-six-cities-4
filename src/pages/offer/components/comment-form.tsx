@@ -1,7 +1,7 @@
-import React, { FC, FormEvent, useEffect, useState } from 'react';
-import StarInput from '../../../components/StarInput';
+import { FC, FormEvent, useEffect, useState } from 'react';
+import StarInput from '../../../components/star-input';
 import { axiosInstance } from '../../../api';
-import { SEND_FORM } from '../../../const/apiConsts';
+import { SEND_FORM } from '../../../const/api-const';
 
 const starValues = [5, 4, 3, 2, 1];
 const MIN_REVIEW_SYMBOLS = 50;
@@ -14,10 +14,10 @@ interface FormData {
 
 export interface CommentFormProps {
   offerId: string;
-  afterFormSend: () => void;
+  handleFormSend: () => void;
 }
 
-const CommentForm: FC<CommentFormProps> = ({ offerId, afterFormSend }) => {
+const CommentForm: FC<CommentFormProps> = ({ offerId, handleFormSend }) => {
 
   const [data, setData] = useState<FormData>({rating: undefined, comment: ''});
   const [submitDisabled, setSumitDisabled] = useState(true);
@@ -38,7 +38,7 @@ const CommentForm: FC<CommentFormProps> = ({ offerId, afterFormSend }) => {
         setSumitDisabled(true);
         await axiosInstance.post<Comment>(`${SEND_FORM}/${offerId}`, data);
         setData({rating: undefined, comment: ''});
-        afterFormSend();
+        handleFormSend();
       } catch (err) {
         // eslint-disable-next-line no-alert
         alert('Something went wrong, your comment wasn\'t saved');
