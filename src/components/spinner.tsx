@@ -29,11 +29,7 @@ const Spinner: FC<SpinnerProps> = ({sizeInPixels}) => {
 
   return (
     <div
-      style={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center'
-      }}
+      className='spinner-wrapper'
     >
       <div ref={ref} className="spinner" style={{
         width: `${sizeInPixels}px`,

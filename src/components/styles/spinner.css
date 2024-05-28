@@ -4,3 +4,9 @@
     border-top-color: #3498db;
     border-radius: 50%;
 }
+
+.spinner-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
