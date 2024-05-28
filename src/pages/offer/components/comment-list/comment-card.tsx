@@ -1,6 +1,6 @@
 import { FC } from 'react';
-import { Comment } from '../../../types/comment';
-import { formatDateMonthYYYY, formatDateToYYYYMMDD } from '../../../utils/datetime';
+import { Comment } from '../../../../types/comment';
+import { formatDateMonthYYYY, formatDateToYYYYMMDD } from '../../../../utils/datetime';
 import React from 'react';
 
 export interface ReviewCardProps {

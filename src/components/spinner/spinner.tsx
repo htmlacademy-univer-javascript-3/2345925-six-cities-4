@@ -1,5 +1,5 @@
 import { FC, useEffect, useRef } from 'react';
-import './styles/spinner.css';
+import './spinner.css';
 
 export interface SpinnerProps {
     sizeInPixels: number;

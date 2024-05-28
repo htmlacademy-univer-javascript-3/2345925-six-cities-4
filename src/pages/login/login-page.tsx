@@ -1,5 +1,5 @@
 import { FC, FormEvent, useState } from 'react';
-import Header from '../../components/header';
+import Header from '../../components/header/header';
 import { useAppDispatch } from '../../state';
 import { MAIN_URL } from '../../const/url';
 import { Navigate, useNavigate } from 'react-router-dom';

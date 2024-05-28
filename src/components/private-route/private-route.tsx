@@ -1,8 +1,8 @@
 import { FC } from 'react';
 import { Navigate } from 'react-router-dom';
-import { AuthStatus } from '../types/auth-status';
+import { AuthStatus } from '../../types/auth-status';
 import { useSelector } from 'react-redux';
-import { selectAuthStatus } from '../state/selectors';
+import { selectAuthStatus } from '../../state/selectors';
 
 export interface PrivateProps {
     toUrl: string;

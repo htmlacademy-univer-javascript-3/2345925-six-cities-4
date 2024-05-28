@@ -1,11 +1,11 @@
 import { FC } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { FAVOURITES_URL, LOGIN_URL, MAIN_URL } from '../const/url';
+import { FAVOURITES_URL, LOGIN_URL, MAIN_URL } from '../../const/url';
 import { useSelector } from 'react-redux';
-import { selectCurrentUser, selectOffersList } from '../state/selectors';
-import { useAppDispatch } from '../state';
+import { selectCurrentUser, selectOffersList } from '../../state/selectors';
+import { useAppDispatch } from '../../state';
 import React from 'react';
-import { logOut } from '../state/user/user-actions';
+import { logOut } from '../../state/user/user-actions';
 
 export interface HeaderProps {
     showSignButton?: boolean;

@@ -1,7 +1,7 @@
 import { FC } from 'react';
-import { Comment } from '../../../types/comment';
+import { Comment } from '../../../../types/comment';
 import CommentCard from './comment-card';
-import { compareDates } from '../../../utils/datetime';
+import { compareDates } from '../../../../utils/datetime';
 import React from 'react';
 
 export interface CommentsListProps {
