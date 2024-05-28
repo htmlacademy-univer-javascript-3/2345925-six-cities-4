@@ -2,10 +2,10 @@ import { FC, useCallback } from 'react';
 import classNames from 'classnames';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { City } from '../../../types/offer';
-import { selectCurrentCity } from '../../../state/selectors';
+import { City } from '../../../../types/offer';
+import { changeCity } from '../../../../state/city/city-actions';
 import React from 'react';
-import { changeCity } from '../../../state/city/city-actions';
+import { selectCurrentCity } from '../../../../state/selectors';
 
 interface CitiesTabsProps {
   cities: City[];

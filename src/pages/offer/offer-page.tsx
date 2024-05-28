@@ -1,14 +1,9 @@
 import { FC, useCallback, useEffect, useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import Header from '../../components/header';
-import Spinner from '../../components/spinner';
+import Spinner from '../../components/spinner/spinner';
 import NotFoundPage from '../not-found/not-found-page';
-import FavouriteButton from '../../components/favourite-button';
-import CommentForm from './components/comment-form';
-import CommentsList from './components/comments-list';
-import NearbyOffersList from './components/nearby-offers-list';
-import { Map } from '../../components/map';
+import CommentForm from './components/comment-form/comment-form';
 import { axiosInstance } from '../../api';
 import { GET_COMMENTS, GET_OFFERS } from '../../const/api-const';
 import { offerToMapPoint } from '../../utils/map-utils';
@@ -17,6 +12,11 @@ import { AuthStatus } from '../../types/auth-status';
 import { FullOfferInfo } from '../../types/full-offer-info';
 import { Offer } from '../../types/offer';
 import { Comment } from '../../types/comment';
+import Header from '../../components/header/header';
+import FavouriteButton from '../../components/favourite-button/favourite-button';
+import CommentsList from './components/comment-list/comments-list';
+import NearbyOffersList from './components/nearby-offers-list/nearby-offers-list';
+import { Map } from '../../components/map/map';
 
 const MAX_PREVIEW_IMAGES = 6;
 const MAX_NEARBY_OFFERS = 3;

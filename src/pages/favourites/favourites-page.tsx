@@ -1,9 +1,9 @@
 import { FC } from 'react';
-import OffersForCity from './components/offers-for-city';
-import { Offer } from '../../types/offer';
-import Header from '../../components/header';
 import { useSelector } from 'react-redux';
 import { selectOffersList } from '../../state/selectors';
+import Header from '../../components/header/header';
+import OffersForCity from './components/offers-for-city/offers-for-city';
+import { Offer } from '../../types/offer';
 
 export interface FavouritesPageProps {
 }
