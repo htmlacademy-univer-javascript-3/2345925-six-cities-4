@@ -1,12 +1,14 @@
-import { FC, FormEvent, useState } from 'react';
+import { FC, FormEvent, useMemo, useState } from 'react';
 import Header from '../../components/header/header';
 import { useAppDispatch } from '../../state';
 import { MAIN_URL } from '../../const/url';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { selectAuthStatus } from '../../state/selectors';
 import { AuthStatus } from '../../types/auth-status';
 import { logIn } from '../../state/user/user-actions';
+import { CITIES_DATA } from '../../const/cities';
+import { changeCity } from '../../state/city/city-actions';
 
 interface FormState {
   email: string;
@@ -25,6 +27,7 @@ export const LoginPage: FC = () => {
   const dispatch = useAppDispatch();
   const authStatus = useSelector(selectAuthStatus);
   const navigate = useNavigate();
+  const randomCityName = useMemo(() => CITIES_DATA[Math.floor(Math.random() * CITIES_DATA.length)], []);
   const onSubmit = (event: FormEvent) => {
     event.preventDefault();
     if(!isValidPassword(formData.password)) {
@@ -89,6 +92,9 @@ export const LoginPage: FC = () => {
           </section>
           <section className="locations locations--login locations--current">
             <div className="locations__item">
+              <Link className="locations__item-link" to={'/'} onClick={() => dispatch(changeCity(randomCityName))}>
+                <span>{randomCityName.name}</span>
+              </Link>
             </div>
           </section>
         </div>
