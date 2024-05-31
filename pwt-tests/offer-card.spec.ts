@@ -3,7 +3,7 @@ import { test, expect, Locator } from '@playwright/test';
 test('should render cards and right number of cards', async ({ page }) => {
   await page.goto('./');
   const text = await page.getByText('places to stay in').textContent();
-
+  await page.locator('.cities_card')
   const numberOfCards = Number(text?.split(' ')[1])
 
   await expect(page.locator('.cities__card')).toHaveCount(numberOfCards);
