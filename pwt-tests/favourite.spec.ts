@@ -23,7 +23,8 @@ const checkIfFavouriteWasAdded = async (page, countToBe, nameToBe) => {
     await checkCount(page, countToBe);
     await page.locator('.header__favorite-count').click();
     await page.waitForURL('./favourites');
-    await page.waitForFunction((name) => document.querySelector('.place-card__name')?.querySelector('a')?.innerHTML === name, nameToBe, { timeout: 1000 });
+    await page.waitForFunction((name) => document.querySelector('.place-card__name')
+        ?.querySelector('a')?.innerHTML === name, nameToBe, { timeout: 1000 });
     await page.goto('./');
 };
 
