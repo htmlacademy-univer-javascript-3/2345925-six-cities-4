@@ -12,7 +12,6 @@ test('should render cards and right number of cards', async ({ page }) => {
 test('should check active city tabs and places found text', async ({ page }) => {
   await page.goto('./');
 
-  // Utility function to check if a locator has the active class
   const isActive = async (locator: Locator) => {
     return locator.evaluate(el => el.classList.contains('tabs__item--active'));
   };
