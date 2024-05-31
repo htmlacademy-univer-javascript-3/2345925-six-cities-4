@@ -1,10 +1,5 @@
 import { test, expect } from '@playwright/test';
 
-
-test.beforeEach(async ({ page }) => {
-  await page.goto('./login');
-});
-
 test('should render the login page', async ({ page }) => {
   await page.goto('./login')
   await expect(page.locator('h1.login__title')).toHaveText('Sign in');

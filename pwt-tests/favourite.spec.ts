@@ -30,7 +30,7 @@ const checkIfFavouriteWasAdded = async (page, countToBe, nameToBe) => {
 
 function getRandomInt() {
     const min = Math.ceil(0);
-    const max = Math.floor(1e9);
+    const max = Math.floor(1e6);
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
