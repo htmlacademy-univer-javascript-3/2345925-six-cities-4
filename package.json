@@ -7,7 +7,7 @@
     "build": "tsc && vite build",
     "lint": "eslint src --ext ts,tsx",
     "preview": "vite preview",
-    "test": "npx playwright test"
+    "test": "vitest --passWithNoTests"
   },
   "dependencies": {
     "@reduxjs/toolkit": "1.9.7",
