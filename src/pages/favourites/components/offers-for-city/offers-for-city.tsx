@@ -1,8 +1,11 @@
-/* eslint-disable react/jsx-no-useless-fragment */
 import { FC } from 'react';
 import React from 'react';
 import FavouritesOffer from './favourites-offer';
 import { Offer } from '../../../../types/offer';
+import { Link } from 'react-router-dom';
+import { MAIN_URL } from '../../../../const/url';
+import { useAppDispatch } from '../../../../state';
+import { changeCity } from '../../../../state/city/city-actions';
 
 export interface OffresForCityProps {
     offers: Offer[] | null;
@@ -11,9 +14,11 @@ export interface OffresForCityProps {
 
 const OffersForCity: FC<OffresForCityProps> = ({ offers, city }) => {
 
-  if(!offers) {
+  const dispatch = useAppDispatch();
+
+  if(!offers || offers.length === 0) {
     return (
-      <></>
+      <div></div>
     );
   }
 
@@ -21,9 +26,9 @@ const OffersForCity: FC<OffresForCityProps> = ({ offers, city }) => {
     <li className="favorites__locations-items">
       <div className="favorites__locations locations locations--current">
         <div className="locations__item">
-          <a className="locations__item-link" href="#">
+          <Link className="locations__item-link" to={MAIN_URL} onClick={() => dispatch(changeCity(offers[0].city))}>
             <span>{ city }</span>
-          </a>
+          </Link>
         </div>
       </div>
       <div className="favorites__places">
